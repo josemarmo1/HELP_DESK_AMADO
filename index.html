@@ -78,9 +78,6 @@
     .btn-outline{background:#fff;color:var(--roxo);border-color:var(--roxo)}
     .btn-outline:hover{background:#f8f5ff}
 
-    .cta-suporte{position:fixed;right:18px;bottom:18px;z-index:70;background:linear-gradient(135deg,var(--laranja),var(--roxo));color:#fff;border-radius:999px;padding:12px 16px;font-weight:800;text-decoration:none;box-shadow:0 10px 30px rgba(0,0,0,.18);animation:pulse 2.4s ease-in-out infinite}
-    @keyframes pulse{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-
     .container{max-width:1200px;margin:0 auto;padding:28px 18px 60px}
     .section-title{text-align:center;color:var(--roxo);font:800 clamp(1.3rem,3vw,1.9rem)/1 var(--font-heading);margin:22px 0 26px}
 
@@ -142,24 +139,14 @@
     .btn-download{display:inline-flex;align-items:center;gap:8px; padding:12px 14px;border-radius:12px;border:1px solid transparent; background:var(--laranja);color:#fff;font-weight:800;text-decoration:none; box-shadow:0 6px 14px rgba(255,107,0,.25)}
     .btn-download:hover{filter:brightness(.96)} .btn-download:active{transform:translateY(1px)}
 
-    .cb{position:fixed;right:18px;bottom:90px;z-index:70;display:none}
-    .cb.open{display:block}
-    .cb-window{width:min(92vw,380px);height:520px;background:#fff;border:1px solid var(--borda);border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.18);display:flex;flex-direction:column;overflow:hidden}
-    .cb-header{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:linear-gradient(90deg,var(--roxo),var(--laranja));color:#fff;position:relative}
-    .cb-title{font:800 1rem/1 var(--font-heading);display:flex;align-items:center;gap:8px}
-    .cb-actions{display:flex;gap:8px}
-    .cb-ico{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:10px;padding:6px 8px;font-weight:800;cursor:pointer}
-    .cb-messages{flex:1;padding:12px;overflow:auto;background:linear-gradient(180deg,#ffffff 0%, #faf7ff 100%)}
-    .cb-msg{display:flex;margin:8px 0;gap:8px;align-items:flex-start}
-    .cb-msg.user .bubble{background:#e3f2ff;border:1px solid #cfe7ff;color:#0b2a55}
-    .cb-msg.bot .bubble{background:linear-gradient(180deg,#f6f0ff,#fff);border:1px solid #eadcff}
-    .bubble{padding:10px 12px;border-radius:12px;max-width:78%;box-shadow:0 2px 8px rgba(0,0,0,.04);white-space:pre-wrap}
-    .avatar{width:26px;height:26px;border-radius:999px;display:grid;place-items:center;font-weight:800;color:#fff}
-    .avatar.u{background:var(--azul)} .avatar.b{background:var(--roxo)}
-    .cb-typing{font-size:.85rem;opacity:.7;margin:6px 12px}
-    .cb-input{display:flex;gap:8px;padding:10px;border-top:1px solid var(--borda);background:#fff}
-    .cb-input input{flex:1;padding:10px;border:1px solid var(--borda);border-radius:10px}
-    .cb-input button{padding:10px 12px;border-radius:10px;border:1px solid transparent;background:var(--laranja);color:#fff;font-weight:800;cursor:pointer}
+    /* ====== Busca ====== */
+    .search-wrap{max-width:1200px;margin:0 auto 14px; padding:0 18px; display:grid; gap:8px}
+    .search-bar{display:flex;align-items:center;gap:8px;border:1px solid var(--borda);background:#fff;border-radius:12px;padding:10px 12px}
+    .search-bar input{flex:1;border:0;outline:0;font:600 1rem var(--font-body)}
+    .search-bar button{border:1px solid var(--borda);background:#fff;border-radius:10px;padding:8px 10px;font-weight:800;cursor:pointer}
+    .no-results{display:none;text-align:center;border:1px dashed var(--borda);border-radius:14px;padding:18px;margin-top:8px;color:#6b7280}
+    .no-results.show{display:block}
+    mark{background:#fff3cd; padding:0 .15em; border-radius:4px}
 
     @media (max-width: 900px){ nav.primary{display:none} .hamb{display:inline-flex} }
     @media (max-width: 768px){
@@ -172,10 +159,6 @@
       .card-body{padding:14px}
       .card-title{font-size:1rem}
       .footer-wrap{flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px}
-      .cta-suporte{right:14px;bottom:calc(14px + env(safe-area-inset-bottom))}
-      .cb{right:14px;bottom:calc(80px + env(safe-area-inset-bottom))}
-      .cb-window{width:96vw;height:70vh;border-radius:14px}
-      .bubble{max-width:86%}
     }
     @media (max-width:420px){
       .btn{width:100%;max-width:360px;font-size:.98rem;padding:11px 14px}
@@ -226,7 +209,7 @@
   <section class="hero">
     <div class="wrap">
       <h1>Bem-vindos ao Help Amado</h1>
-      <p>Projetos criativos e suporte técnico para transformar a aprendizagem.</p>
+    <p>Projetos criativos e suporte técnico para transformar a aprendizagem.</p>
       <div class="actions">
         <a class="btn btn-primary" href="manuais.html">Ver Manuais</a>
         <a class="btn btn-outline" href="suporte.html">Abrir Chamado</a>
@@ -234,15 +217,23 @@
     </div>
   </section>
 
-  <a class="cta-suporte" href="#" id="ctaChat" title="Precisa de ajuda agora?">Precisa de Suporte?</a>
-
   <main class="container">
-    <div class="ribbon"><p>Impressora 3D • Corte a Laser • Plotter • Telas Interativas • Notebooks</p></div>
+    <div class="ribbon"><p>Impressora 3D • Corte a Laser • Plotter • Tela Interativa • Notebook</p></div>
+
+    <!-- BUSCA (sem sugestões/contagem) -->
+    <div class="search-wrap" role="search" aria-label="Buscar projetos">
+      <div class="search-bar">
+        <input id="searchInput" type="search" placeholder="Digite para filtrar (ex.: 9 ano, laser, robotica, mapa)" autocomplete="off" />
+        <button id="searchClear" type="button" title="Limpar">Limpar</button>
+      </div>
+      <div class="no-results" id="noResults">Nenhum projeto encontrado para este termo.</div>
+    </div>
 
     <h2 class="section-title">Ideias de Projetos Pedagógicos</h2>
+
     <section class="grid" aria-label="Ideias pedagógicas">
-      <!-- Basta trocar data-video para um link do YouTube (watch/youtu.be/embed) ou para um URL .mp4 hospedado -->
-      <article class="card" data-project="proj1" data-pdf="livros/proj1.pdf" data-video="https://youtu.be/5f5LUSQlYMU" data-files="downloads/proj1.zip">
+      <!-- Use data-tags para melhorar a busca -->
+      <article class="card" data-project="proj1" data-pdf="livros/proj1.pdf" data-video="https://youtu.be/5f5LUSQlYMU" data-files="downloads/proj1.zip" data-tags="9 ano, logística, corte a laser, impressora 3d, cd 4.0, identidade visual">
         <div class="card-media"><img src="imagens/INDUSTRIAL .jpg" alt="Centro de Distribuição 4.0"/></div>
         <div class="card-body">
           <h3 class="card-title">Centro de Distribuição 4.0</h3>
@@ -251,13 +242,13 @@
             <span class="badge">9° Ano</span>
             <div style="display:flex;gap:8px;flex-wrap:wrap">
               <button class="btn-mini" data-modal="proj1">Ver projeto</button>
-              <a class="btn-book" href="livros/proj1.pdf" target="_blank" rel="noopener">Abrir livro</a>
+              <a class="btn-book" href="livros/DIGITALMENTE LIVRO DO PROFESSOR_9º ANO_V1 - DIGITAL_REV.pdf" target="_blank" rel="noopener">Abrir livro</a>
             </div>
           </div>
         </div>
       </article>
 
-      <article class="card" data-project="proj2" data-pdf="livros/proj2.pdf" data-video="videos/proj2.mp4" data-files="downloads/proj2.zip">
+      <article class="card" data-project="proj2" data-pdf="livros/proj2.pdf" data-video="videos/proj2.mp4" data-files="downloads/proj2.zip" data-tags="impressão 3d, selo, alto relevo, tinkercad, fusion, pla">
         <div class="card-media"><img src="imagens/placa 3d.png" alt="Peças impressas 3D"/></div>
         <div class="card-body">
           <h3 class="card-title">Selo 3D da Escola</h3>
@@ -272,7 +263,7 @@
         </div>
       </article>
 
-      <article class="card" data-project="proj3" data-pdf="livros/proj3.pdf" data-video="videos/proj3.mp4" data-files="downloads/proj3.zip">
+      <article class="card" data-project="proj3" data-pdf="livros/proj3.pdf" data-video="videos/proj3.mp4" data-files="downloads/proj3.zip" data-tags="mapa, geografia, mdf 3mm, quebra-cabeça, estados">
         <div class="card-media"><img src="imagens/Mapa MDF.png" alt="Quebra-cabeça de mapa"/></div>
         <div class="card-body">
           <h3 class="card-title">Mapa Quebra-cabeça</h3>
@@ -287,7 +278,7 @@
         </div>
       </article>
 
-      <article class="card" data-project="proj4" data-pdf="livros/proj4.pdf" data-video="videos/proj4.mp4" data-files="downloads/proj4.zip">
+      <article class="card" data-project="proj4" data-pdf="livros/proj4.pdf" data-video="videos/proj4.mp4" data-files="downloads/proj4.zip" data-tags="pictogramas, sinalização, vinil, design, acessibilidade">
         <div class="card-media"><img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?w=800&auto=format&fit=crop&q=70" alt="Placas e adesivos"/></div>
         <div class="card-body">
           <h3 class="card-title">Sinalização da Escola</h3>
@@ -302,7 +293,7 @@
         </div>
       </article>
 
-      <article class="card" data-project="proj5" data-pdf="livros/proj5.pdf" data-video="videos/proj5.mp4" data-files="downloads/proj5.zip">
+      <article class="card" data-project="proj5" data-pdf="livros/proj5.pdf" data-video="videos/proj5.mp4" data-files="downloads/proj5.zip" data-tags="robótica, sensores, lógica, kits educacionais">
         <div class="card-media"><img src="imagens/robo.png" alt="Protótipos com microcontroladores"/></div>
         <div class="card-body">
           <h3 class="card-title">Robótica Básica</h3>
@@ -317,7 +308,7 @@
         </div>
       </article>
 
-      <article class="card" data-project="proj6" data-pdf="livros/proj6.pdf" data-video="videos/proj6.mp4" data-files="downloads/proj6.zip">
+      <article class="card" data-project="proj6" data-pdf="livros/proj6.pdf" data-video="videos/proj6.mp4" data-files="downloads/proj6.zip" data-tags="carimbo, borracha, gravação a laser, cabo 3d, artes">
         <div class="card-media"><img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&auto=format&fit=crop&q=70" alt="Carimbos"/></div>
         <div class="card-body">
           <h3 class="card-title">Carimbo Pedagógico</h3>
@@ -332,7 +323,7 @@
         </div>
       </article>
 
-      <article class="card" data-project="proj7" data-pdf="livros/proj7.pdf" data-video="videos/proj7.mp4" data-files="downloads/proj7.zip">
+      <article class="card" data-project="proj7" data-pdf="livros/proj7.pdf" data-video="videos/proj7.mp4" data-files="downloads/proj7.zip" data-tags="paramétrico, tolerância, encaixe, design, matemática">
         <div class="card-media"><img src="https://images.unsplash.com/photo-1587573089734-09cb69c0f1b3?w=800&auto=format&fit=crop&q=70" alt="Porta-lápis"/></div>
         <div class="card-body">
           <h3 class="card-title">Porta-lápis Paramétrico</h3>
@@ -347,7 +338,7 @@
         </div>
       </article>
 
-      <article class="card" data-project="proj8" data-pdf="livros/proj8.pdf" data-video="videos/proj8.mp4" data-files="downloads/proj8.zip">
+      <article class="card" data-project="proj8" data-pdf="livros/proj8.pdf" data-video="videos/proj8.mp4" data-files="downloads/proj8.zip" data-tags="totem, qrcode, exposição, links, integração digital">
         <div class="card-media"><img src="https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800&auto=format&fit=crop&q=70" alt="Totem com QR Codes"/></div>
         <div class="card-body">
           <h3 class="card-title">Totem com QR Codes</h3>
@@ -382,22 +373,6 @@
     </div>
   </div>
 
-  <!-- Chat -->
-  <div class="cb" id="chatbot" aria-live="polite">
-    <div class="cb-window">
-      <div class="cb-header">
-        <div class="cb-title">🤖 Chat IA</div>
-        <div class="cb-actions"><button class="cb-ico" id="cbCloseBtn" title="Fechar">✖</button></div>
-        <div class="cb-progress" id="cbProgress" aria-hidden="true"><span id="cbProgressBar"></span></div>
-      </div>
-      <div class="cb-messages" id="cbMessages"></div>
-      <form class="cb-input" id="cbForm">
-        <input id="cbText" type="text" placeholder="Escreva sua pergunta..." autocomplete="off" />
-        <button type="submit">Enviar</button>
-      </form>
-    </div>
-  </div>
-
   <script>
     /* ===== Drawer ===== */
     (() => {
@@ -405,7 +380,6 @@
       const btn      = document.getElementById('btnHamb');
       const closeBtn = document.getElementById('btnClose');
       const backdrop = document.getElementById('backdrop');
-      const sheet    = drawer.querySelector('.sheet');
       const links    = drawer.querySelectorAll('.links a');
 
       const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
@@ -458,41 +432,38 @@
       card.appendChild(r); setTimeout(()=>r.remove(),600);
     });
 
-    /* ===== Modal de projetos (agora aceita YouTube e MP4 hospedado) ===== */
+    /* ===== Modal (templates resumidos) ===== */
+    const TPL={
+      proj1:`<div class="chips"><span class="badge">Corte a Laser</span><span class="badge">Impressora 3D</span><span class="badge">9º Ano</span></div><p><strong>Centro de Distribuição 4.0</p><ol class="steps"><li>Desenho vetorial simples.</li><li>Definir camadas de corte/gravação.</li><li>Testes de potência/velocidade.</li><li>Corte e montagem.</li></ol>`,
+      proj2:`<div class="chips"><span class="badge">Impressora 3D</span><span class="badge">2–3 aulas</span></div><p><strong>Selo 3D da Escola</strong> — alto relevo.</p><ol class="steps"><li>Modelagem (Tinkercad/Fusion).</li><li>Fatiar 0,2mm / 20%.</li><li>Imprimir PLA.</li></ol>`,
+      proj3:`<div class="chips"><span class="badge">Corte a Laser</span><span class="badge">2 aulas</span></div><p><strong>Mapa Quebra-cabeça</strong> — MDF 3mm.</p><ol class="steps"><li>Vetor por estados.</li><li>Corte e identificação.</li><li>Base/tabuleiro.</li></ol>`,
+      proj4:`<div class="chips"><span class="badge">Plotter</span><span class="badge">1–2 aulas</span></div><p><strong>Sinalização da Escola</strong>.</p><ol class="steps"><li>Levantamento.</li><li>Recorte e depilação.</li><li>Aplicação.</li></ol>`,
+      proj5:`<div class="chips"><span class="badge">Tecnologia</span><span class="badge">2–4 aulas</span></div><p><strong>Robótica Básica</strong>.</p><ol class="steps"><li>Montagem.</li><li>Programação.</li><li>Desafio.</li></ol>`,
+      proj6:`<div class="chips"><span class="badge">3D + Laser</span><span class="badge">1–2 aulas</span></div><p><strong>Carimbo Pedagógico</strong>.</p><ol class="steps"><li>Cabo 3D.</li><li>Gravar borracha (espelhado).</li><li>Colar e testar.</li></ol>`,
+      proj7:`<div class="chips"><span class="badge">Corte a Laser</span><span class="badge">1–2 aulas</span></div><p><strong>Porta-lápis Paramétrico</strong>.</p><ol class="steps"><li>Parâmetros.</li><li>Corte e montagem.</li><li>Acabamento.</li></ol>`,
+      proj8:`<div class="chips"><span class="badge">Plotter + Tela</span><span class="badge">1 aula</span></div><p><strong>Totem com QR Codes</strong>.</p><ol class="steps"><li>Gerar QR.</li><li>Imprimir/ montar.</li><li>Testar.</li></ol>`
+    };
+
     const overlay = document.getElementById('overlay');
     const modalBody = document.getElementById('modalBody');
     const modalTitle = document.getElementById('modalTitle');
     const modalFooter = document.getElementById('modalFooter');
     const closeModal = document.getElementById('closeModal');
 
-    const TPL={
-      proj1:`<div class="chips"><span class="badge">Corte a Laser</span><span class="badge">Impresora 3D</span></div><p><strong>Centro de distribuição 4.0</strong></p><ol class="steps"><li>Desenho vetorial simples.</li><li>Definir corte/gravação.</li><li>Testar potência/velocidade.</li><li>Cortar e montar.</li></ol>`,
-      proj2:`<div class="chips"><span class="badge">Impressora 3D</span><span class="badge">2–3 aulas</span></div><p><strong>Selo da escola</strong> em alto-relevo.</p><ol class="steps"><li>Modelagem (Tinkercad/Fusion).</li><li>Fatiar 0,2mm / 20%.</li><li>Imprimir PLA e finalizar.</li></ol>`,
-      proj3:`<div class="chips"><span class="badge">Corte a Laser</span><span class="badge">2 aulas</span></div><p><strong>Mapa-puzzle</strong> para estudar regiões.</p><ol class="steps"><li>Vetor por estados.</li><li>Corte MDF 3mm.</li><li>Base/tabuleiro.</li></ol>`,
-      proj4:`<div class="chips"><span class="badge">Plotter</span><span class="badge">1–2 aulas</span></div><p><strong>Sinalização</strong> com ícones e cores padronizadas.</p><ol class="steps"><li>Levantamento de locais.</li><li>Recorte de vinil.</li><li>Aplicação assistida.</li></ol>`,
-      proj5:`<div class="chips"><span class="badge">Tecnologia</span><span class="badge">2–4 aulas</span></div><p><strong>Robôs simples</strong> com sensores.</p><ol class="steps"><li>Montagem do kit.</li><li>Programação básica.</li><li>Desafio final.</li></ol>`,
-      proj6:`<div class="chips"><span class="badge">3D + Laser</span><span class="badge">1–2 aulas</span></div><p><strong>Carimbo</strong> com cabo 3D e matriz a laser.</p><ol class="steps"><li>Modelar e imprimir cabo.</li><li>Gravar borracha (espelhado).</li><li>Colar e testar.</li></ol>`,
-      proj7:`<div class="chips"><span class="badge">Corte a Laser</span><span class="badge">1–2 aulas</span></div><p><strong>Porta-lápis</strong> com folga ajustada.</p><ol class="steps"><li>Desenho paramétrico.</li><li>Corte e montagem.</li><li>Acabamento.</li></ol>`,
-      proj8:`<div class="chips"><span class="badge">Plotter + Tela</span><span class="badge">1 aula</span></div><p><strong>Totem com QR Codes</strong> para exposição.</p><ol class="steps"><li>Gerar QR Codes.</li><li>Imprimir totem.</li><li>Montar e testar.</li></ol>`
-    };
-
-    const normalize = (p) => (p || "").replace(/\\/g,'/');
+    const normalizePath = (p) => (p || "").replace(/\\/g,'/');
 
     function toYouTubeEmbed(url){
       if (!url) return url;
-      // youtu.be/ID
       const short = url.match(/youtu\.be\/([^?&]+)/i);
       if (short) return `https://www.youtube.com/embed/${short[1]}`;
-      // watch?v=ID
       const watch = url.match(/[?&]v=([^?&]+)/i);
       if (watch) return `https://www.youtube.com/embed/${watch[1]}`;
-      // already /embed/
       if (/youtube\.com\/embed\//i.test(url)) return url;
       return url;
     }
 
     function buildModalGrid(videoSrc, htmlContent){
-      const src = normalize(videoSrc);
+      const src = normalizePath(videoSrc);
       const isYouTube = /(youtube\.com|youtu\.be)/i.test(src);
       const media = isYouTube
         ? `<iframe src="${toYouTubeEmbed(src)}" title="YouTube video player" frameborder="0"
@@ -521,8 +492,8 @@
       const files = card.dataset.files || '';
 
       modalTitle.textContent = title;
-
       modalBody.innerHTML = '';
+
       const contentHTML = (TPL[key] || '<p>Conteúdo indisponível.</p>');
       if(video){
         modalBody.appendChild(buildModalGrid(video, contentHTML));
@@ -564,13 +535,132 @@
     overlay?.addEventListener('click', (e)=>{ if(e.target === overlay){ closeProjectModal(); } });
     document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && overlay.classList.contains('open')) closeProjectModal(); });
 
-    /* Chat (placeholder) */
-    (()=>{
-      const chat = document.getElementById('chatbot');
-      const cta = document.getElementById('ctaChat');
-      const close = document.getElementById('cbCloseBtn');
-      cta?.addEventListener('click', (e)=>{ e.preventDefault(); chat.classList.add('open'); });
-      close?.addEventListener('click', ()=> chat.classList.remove('open'));
+    /* ===== Busca de cards (fuzzy, sem sugestões/contagem) ===== */
+    (() => {
+      const $ = (sel,ctx=document) => ctx.querySelector(sel);
+      const $$ = (sel,ctx=document) => Array.from(ctx.querySelectorAll(sel));
+
+      const input = $('#searchInput');
+      const btnClear = $('#searchClear');
+      const noResults = $('#noResults');
+      const grid = document.querySelector('.grid');
+      if(!grid) return;
+      const cards = $$('.card', grid);
+
+      // Índice
+      const idx = cards.map(card => {
+        const title = (card.querySelector('.card-title')?.textContent || '').trim();
+        const desc = (card.querySelector('.card-body p')?.textContent || '').trim();
+        const badges = $$('.badge', card).map(b => b.textContent.trim()).join(' ');
+        const tags = (card.dataset.tags || '').trim();
+        const haystack = [title, desc, badges, tags].join(' ').toLowerCase();
+        return {card, title, desc, badges, tags, haystack};
+      });
+
+      // Normalização com remoção de acentos
+      const norm = s => (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+
+      // Distância de Levenshtein (limitada)
+      function lev(a,b,max=2){
+        if (Math.abs(a.length - b.length) > max) return max+1;
+        const dp = Array(b.length+1).fill(0).map((_,j)=>j);
+        for (let i=1;i<=a.length;i++){
+          let prev = i-1, cur = i;
+          for (let j=1;j<=b.length;j++){
+            const t = dp[j];
+            cur = Math.min(
+              dp[j] + 1,         // deleção
+              cur + 1,           // inserção
+              prev + (a[i-1]===b[j-1]?0:1) // substituição
+            );
+            dp[j] = cur; prev = t;
+          }
+          dp[0] = i;
+        }
+        return dp[b.length];
+      }
+
+      // Tokenização simples (palavras com letras/números)
+      const tokenize = s => norm(s).split(/[^a-z0-9]+/).filter(Boolean);
+
+      // Fuzzy match: todos os tokens do termo devem estar presentes de forma aproximada
+      function fuzzyMatch(q, hay){
+        if (!q) return true;
+        const hTokens = tokenize(hay);
+        const qTokens = tokenize(q);
+        if (!qTokens.length) return true;
+
+        return qTokens.every(qt => {
+          // match exato rápido
+          if (hTokens.includes(qt)) return true;
+          // aproximação: se algum token do hay tem distância <=1 (curtos) ou <=2 (maiores)
+          const max = qt.length <= 4 ? 1 : 2;
+          for (const ht of hTokens){
+            if (Math.abs(ht.length - qt.length) > max) continue;
+            if (lev(qt, ht, max) <= max) return true;
+          }
+          return false;
+        });
+      }
+
+      // Highlight
+      function highlight(card, term){
+        const t = card.querySelector('.card-title');
+        const p = card.querySelector('.card-body p');
+        [t,p].forEach(el=>{
+          if(!el) return;
+          const raw = el.getAttribute('data-raw') || el.textContent;
+          if(!el.getAttribute('data-raw')) el.setAttribute('data-raw', raw);
+          if(!term){ el.innerHTML = raw; return; }
+          const esc = term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+          const re = new RegExp(`(${esc})`,'ig');
+          el.innerHTML = raw.replace(re, '<mark>$1</mark>');
+        });
+      }
+
+      let tId;
+      function doSearch(){
+        clearTimeout(tId);
+        tId = setTimeout(applySearch, 80);
+      }
+
+      function applySearch(){
+        const qRaw = input.value.trim();
+        let matches = 0;
+
+        idx.forEach(item=>{
+          const ok = fuzzyMatch(qRaw, item.haystack);
+          item.card.style.display = ok ? '' : 'none';
+          if (ok) matches++;
+          highlight(item.card, qRaw);
+        });
+
+        noResults.classList.toggle('show', matches===0);
+
+        // URL ?q=
+        const url = new URL(location.href);
+        if(qRaw) url.searchParams.set('q', qRaw);
+        else url.searchParams.delete('q');
+        history.replaceState(null,'', url.toString());
+      }
+
+      input.addEventListener('input', doSearch);
+      btnClear.addEventListener('click', ()=>{
+        input.value=''; input.focus(); doSearch();
+      });
+
+      // Atalho: / foca no campo; Esc limpa
+      document.addEventListener('keydown', (e)=>{
+        if (e.key === '/' && document.activeElement !== input){
+          e.preventDefault(); input.focus();
+        } else if (e.key === 'Escape' && input.value){
+          input.value=''; doSearch();
+        }
+      });
+
+      const qParam = new URL(location.href).searchParams.get('q');
+      if(qParam){ input.value = qParam; }
+      applySearch();
     })();
   </script>
 </body>
