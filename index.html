@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-  <title>Help Amado — Início</title>
+  <title>HelpAmado — Início</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;800&display=swap" rel="stylesheet"/>
   <style>
     :root{
@@ -209,7 +209,7 @@
   <section class="hero">
     <div class="wrap">
       <h1>Bem-vindos ao Help Amado</h1>
-    <p>Projetos criativos e suporte técnico para transformar a aprendizagem.</p>
+      <p>Projetos criativos e suporte técnico para transformar a aprendizagem.</p>
       <div class="actions">
         <a class="btn btn-primary" href="manuais.html">Ver Manuais</a>
         <a class="btn btn-outline" href="suporte.html">Abrir Chamado</a>
@@ -432,16 +432,88 @@
       card.appendChild(r); setTimeout(()=>r.remove(),600);
     });
 
-    /* ===== Modal (templates resumidos) ===== */
+    /* ===== Templates do modal (apenas explicação + BNCC) ===== */
     const TPL={
-      proj1:`<div class="chips"><span class="badge">Corte a Laser</span><span class="badge">Impressora 3D</span><span class="badge">9º Ano</span></div><p><strong>Centro de Distribuição 4.0</p><ol class="steps"><li>Desenho vetorial simples.</li><li>Definir camadas de corte/gravação.</li><li>Testes de potência/velocidade.</li><li>Corte e montagem.</li></ol>`,
-      proj2:`<div class="chips"><span class="badge">Impressora 3D</span><span class="badge">2–3 aulas</span></div><p><strong>Selo 3D da Escola</strong> — alto relevo.</p><ol class="steps"><li>Modelagem (Tinkercad/Fusion).</li><li>Fatiar 0,2mm / 20%.</li><li>Imprimir PLA.</li></ol>`,
-      proj3:`<div class="chips"><span class="badge">Corte a Laser</span><span class="badge">2 aulas</span></div><p><strong>Mapa Quebra-cabeça</strong> — MDF 3mm.</p><ol class="steps"><li>Vetor por estados.</li><li>Corte e identificação.</li><li>Base/tabuleiro.</li></ol>`,
-      proj4:`<div class="chips"><span class="badge">Plotter</span><span class="badge">1–2 aulas</span></div><p><strong>Sinalização da Escola</strong>.</p><ol class="steps"><li>Levantamento.</li><li>Recorte e depilação.</li><li>Aplicação.</li></ol>`,
-      proj5:`<div class="chips"><span class="badge">Tecnologia</span><span class="badge">2–4 aulas</span></div><p><strong>Robótica Básica</strong>.</p><ol class="steps"><li>Montagem.</li><li>Programação.</li><li>Desafio.</li></ol>`,
-      proj6:`<div class="chips"><span class="badge">3D + Laser</span><span class="badge">1–2 aulas</span></div><p><strong>Carimbo Pedagógico</strong>.</p><ol class="steps"><li>Cabo 3D.</li><li>Gravar borracha (espelhado).</li><li>Colar e testar.</li></ol>`,
-      proj7:`<div class="chips"><span class="badge">Corte a Laser</span><span class="badge">1–2 aulas</span></div><p><strong>Porta-lápis Paramétrico</strong>.</p><ol class="steps"><li>Parâmetros.</li><li>Corte e montagem.</li><li>Acabamento.</li></ol>`,
-      proj8:`<div class="chips"><span class="badge">Plotter + Tela</span><span class="badge">1 aula</span></div><p><strong>Totem com QR Codes</strong>.</p><ol class="steps"><li>Gerar QR.</li><li>Imprimir/ montar.</li><li>Testar.</li></ol>`
+      proj1:`<div class="chips">
+               <span class="badge">Corte a Laser</span>
+               <span class="badge">Impressora 3D</span>
+               <span class="badge">Plotter de Recorte</span>
+             </div>
+             <p><strong>Centro de Distribuição 4.0</strong> — maquete pedagógica que simula logística com peças a laser e acessórios em 3D, conectando design digital e conceitos da Indústria 4.0.</p>
+             <p><strong>Competências BNCC:</strong><br>
+               <em>(EM13MAT405) Utilizar raciocínio lógico e pensamento computacional para representar e resolver problemas..<br>
+               <em>(EM13LP45) Produzir textos técnicos e relatórios para registro e comunicação de processos.
+             </p>`,
+
+      proj2:`<div class="chips">
+               <span class="badge">Impressora 3D</span>
+               <span class="badge">2–3 aulas</span>
+             </div>
+             <p><strong>Selo 3D da Escola</strong> — criação de um emblema em alto-relevo para fortalecer identidade visual e introduzir modelagem e fatiamento.</p>
+             <p><strong>Competências BNCC (edite):</strong><br>
+               <em>Ex. 1:</em> Cultura digital e criação com tecnologias.<br>
+               <em>Ex. 2:</em> Resolução de problemas em processos de produção.
+             </p>`,
+
+      proj3:`<div class="chips">
+               <span class="badge">Corte a Laser</span>
+               <span class="badge">2 aulas</span>
+             </div>
+             <p><strong>Mapa Quebra-cabeça</strong> — estudo de regiões com peças de MDF encaixáveis, integrando geografia e fabricação digital.</p>
+             <p><strong>Competências BNCC (edite):</strong><br>
+               <em>Ex. 1:</em> Localização e representação espacial.<br>
+               <em>Ex. 2:</em> Pensamento científico e investigação.
+             </p>`,
+
+      proj4:`<div class="chips">
+               <span class="badge">Plotter</span>
+               <span class="badge">1–2 aulas</span>
+             </div>
+             <p><strong>Sinalização da Escola</strong> — desenvolvimento de pictogramas e placas, discutindo design, acessibilidade e padronização.</p>
+             <p><strong>Competências BNCC (edite):</strong><br>
+               <em>Ex. 1:</em> Comunicação visual e multimodalidade.<br>
+               <em>Ex. 2:</em> Empatia e respeito à diversidade/acessibilidade.
+             </p>`,
+
+      proj5:`<div class="chips">
+               <span class="badge">Tecnologia</span>
+               <span class="badge">2–4 aulas</span>
+             </div>
+             <p><strong>Robótica Básica</strong> — montagem e programação de protótipos com sensores para desafios práticos.</p>
+             <p><strong>Competências BNCC (edite):</strong><br>
+               <em>Ex. 1:</em> Pensamento computacional e algoritmos.<br>
+               <em>Ex. 2:</em> Trabalho colaborativo e resolução de problemas.
+             </p>`,
+
+      proj6:`<div class="chips">
+               <span class="badge">3D + Laser</span>
+               <span class="badge">1–2 aulas</span>
+             </div>
+             <p><strong>Carimbo Pedagógico</strong> — criação de um carimbo autoral unindo modelagem 3D e gravação a laser.</p>
+             <p><strong>Competências BNCC (edite):</strong><br>
+               <em>Ex. 1:</em> Expressão artística e design.<br>
+               <em>Ex. 2:</em> Planejamento e registro de processo criativo.
+             </p>`,
+
+      proj7:`<div class="chips">
+               <span class="badge">Corte a Laser</span>
+               <span class="badge">1–2 aulas</span>
+             </div>
+             <p><strong>Porta-lápis Paramétrico</strong> — estudo de medidas, tolerâncias e encaixes por meio de desenho paramétrico.</p>
+             <p><strong>Competências BNCC (edite):</strong><br>
+               <em>Ex. 1:</em> Raciocínio quantitativo e medidas.<br>
+               <em>Ex. 2:</em> Modelagem e validação de protótipos.
+             </p>`,
+
+      proj8:`<div class="chips">
+               <span class="badge">Plotter + Tela</span>
+               <span class="badge">1 aula</span>
+             </div>
+             <p><strong>Totem com QR Codes</strong> — montagem de totem expositivo com links para conteúdos digitais produzidos pelos alunos.</p>
+             <p><strong>Competências BNCC (edite):</strong><br>
+               <em>Ex. 1:</em> Cultura digital e curadoria de informações.<br>
+               <em>Ex. 2:</em> Comunicação e divulgação de projetos.
+             </p>`
     };
 
     const overlay = document.getElementById('overlay');
@@ -547,7 +619,6 @@
       if(!grid) return;
       const cards = $$('.card', grid);
 
-      // Índice
       const idx = cards.map(card => {
         const title = (card.querySelector('.card-title')?.textContent || '').trim();
         const desc = (card.querySelector('.card-body p')?.textContent || '').trim();
@@ -557,10 +628,8 @@
         return {card, title, desc, badges, tags, haystack};
       });
 
-      // Normalização com remoção de acentos
       const norm = s => (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 
-      // Distância de Levenshtein (limitada)
       function lev(a,b,max=2){
         if (Math.abs(a.length - b.length) > max) return max+1;
         const dp = Array(b.length+1).fill(0).map((_,j)=>j);
@@ -569,9 +638,9 @@
           for (let j=1;j<=b.length;j++){
             const t = dp[j];
             cur = Math.min(
-              dp[j] + 1,         // deleção
-              cur + 1,           // inserção
-              prev + (a[i-1]===b[j-1]?0:1) // substituição
+              dp[j] + 1,
+              cur + 1,
+              prev + (a[i-1]===b[j-1]?0:1)
             );
             dp[j] = cur; prev = t;
           }
@@ -580,10 +649,8 @@
         return dp[b.length];
       }
 
-      // Tokenização simples (palavras com letras/números)
       const tokenize = s => norm(s).split(/[^a-z0-9]+/).filter(Boolean);
 
-      // Fuzzy match: todos os tokens do termo devem estar presentes de forma aproximada
       function fuzzyMatch(q, hay){
         if (!q) return true;
         const hTokens = tokenize(hay);
@@ -591,9 +658,7 @@
         if (!qTokens.length) return true;
 
         return qTokens.every(qt => {
-          // match exato rápido
           if (hTokens.includes(qt)) return true;
-          // aproximação: se algum token do hay tem distância <=1 (curtos) ou <=2 (maiores)
           const max = qt.length <= 4 ? 1 : 2;
           for (const ht of hTokens){
             if (Math.abs(ht.length - qt.length) > max) continue;
@@ -603,7 +668,6 @@
         });
       }
 
-      // Highlight
       function highlight(card, term){
         const t = card.querySelector('.card-title');
         const p = card.querySelector('.card-body p');
@@ -637,7 +701,6 @@
 
         noResults.classList.toggle('show', matches===0);
 
-        // URL ?q=
         const url = new URL(location.href);
         if(qRaw) url.searchParams.set('q', qRaw);
         else url.searchParams.delete('q');
@@ -649,7 +712,6 @@
         input.value=''; input.focus(); doSearch();
       });
 
-      // Atalho: / foca no campo; Esc limpa
       document.addEventListener('keydown', (e)=>{
         if (e.key === '/' && document.activeElement !== input){
           e.preventDefault(); input.focus();
