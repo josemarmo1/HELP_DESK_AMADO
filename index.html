@@ -109,7 +109,7 @@
       .drawer .sheet,.drawer .backdrop{transition:none}
     }
 
-    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:16px;z-index:75;backdrop-filter:saturate(1.1) blur(2px)}
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:16px;z-index:95;backdrop-filter:saturate(1.1) blur(2px)}
     .overlay.open{display:flex}
     .modal{
       background:#fff;border:1px solid var(--borda);border-radius:16px;
@@ -123,7 +123,16 @@
     .close{background:#fff;border:1px solid var(--borda);border-radius:10px;padding:8px 10px;font-weight:800;cursor:pointer}
     @keyframes pop{from{transform:translateY(6px);opacity:.0}to{transform:translateY(0);opacity:1}}
 
-    .modal-body{padding:16px; overflow:auto; scroll-behavior:smooth; display:block}
+    /* rolando dentro do modal, sem rolar a página */
+    .modal-body{
+      padding:16px;
+      flex:1;
+      overflow:auto;
+      scroll-behavior:smooth;
+      -webkit-overflow-scrolling:touch;
+      overscroll-behavior:contain;
+      display:block;
+    }
     .modal-grid{display:grid; grid-template-columns:1.25fr 1fr; gap:16px; align-items:start}
     @media (max-width: 900px){ .modal-grid{ grid-template-columns:1fr; } }
 
@@ -133,7 +142,6 @@
 
     .proj-content{display:grid;gap:10px}
     .proj-content .chips{display:flex;gap:8px;flex-wrap:wrap}
-    .proj-content .steps{margin:0 0 2px 18px}
 
     .modal-footer{margin-top:auto; position:sticky; bottom:0; z-index:1; background:#fff;border-top:1px solid var(--borda); padding:12px 16px; display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap}
     .btn-download{display:inline-flex;align-items:center;gap:8px; padding:12px 14px;border-radius:12px;border:1px solid transparent; background:var(--laranja);color:#fff;font-weight:800;text-decoration:none; box-shadow:0 6px 14px rgba(255,107,0,.25)}
@@ -147,6 +155,9 @@
     .no-results{display:none;text-align:center;border:1px dashed var(--borda);border-radius:14px;padding:18px;margin-top:8px;color:#6b7280}
     .no-results.show{display:block}
     mark{background:#fff3cd; padding:0 .15em; border-radius:4px}
+
+    /* trava a rolagem da página quando modal/drawer aberto */
+    html.scroll-lock, body.scroll-lock { overflow:hidden; height:100%; }
 
     @media (max-width: 900px){ nav.primary{display:none} .hamb{display:inline-flex} }
     @media (max-width: 768px){
@@ -232,7 +243,7 @@
     <h2 class="section-title">Ideias de Projetos Pedagógicos</h2>
 
     <section class="grid" aria-label="Ideias pedagógicas">
-      <!-- Use data-tags para melhorar a busca -->
+      <!-- cards mantidos iguais ao seu último envio -->
       <article class="card" data-project="proj1" data-pdf="livros/proj1.pdf" data-video="https://youtu.be/5f5LUSQlYMU" data-files="downloads/proj1.zip" data-tags="9 ano, logística, corte a laser, impressora 3d, cd 4.0, identidade visual">
         <div class="card-media"><img src="imagens/INDUSTRIAL .jpg" alt="Centro de Distribuição 4.0"/></div>
         <div class="card-body">
@@ -441,8 +452,8 @@
              </div>
              <p><strong>Centro de Distribuição 4.0</strong> — maquete pedagógica que simula logística com peças a laser e acessórios em 3D, conectando design digital e conceitos da Indústria 4.0.</p>
              <p><strong>Competências BNCC:</strong><br>
-               <em>(EM13MAT405) Utilizar raciocínio lógico e pensamento computacional para representar e resolver problemas..<br>
-               <em>(EM13LP45) Produzir textos técnicos e relatórios para registro e comunicação de processos.
+               <em>(EM13MAT405)</em> Utilizar raciocínio lógico e pensamento computacional para representar e resolver problemas.<br>
+               <em>(EM13LP45)</em> Produzir textos técnicos e relatórios para registrar e comunicar processos.
              </p>`,
 
       proj2:`<div class="chips">
@@ -558,6 +569,26 @@
       return wrap;
     }
 
+    // ===== lock de rolagem da página quando modal abre
+    const blockScroll = (e) => {
+      // se clicar/rolar fora do modal enquanto ele estiver aberto, bloqueia
+      const modal = document.querySelector('.modal');
+      if (overlay.classList.contains('open') && modal && !modal.contains(e.target)) {
+        e.preventDefault();
+      }
+    };
+    function setPageScrollLock(on){
+      document.documentElement.classList.toggle('scroll-lock', on);
+      document.body.classList.toggle('scroll-lock', on);
+      if(on){
+        document.addEventListener('wheel', blockScroll, {passive:false});
+        document.addEventListener('touchmove', blockScroll, {passive:false});
+      }else{
+        document.removeEventListener('wheel', blockScroll);
+        document.removeEventListener('touchmove', blockScroll);
+      }
+    }
+
     function openProjectModal(card, key){
       const title = card.querySelector('.card-title')?.textContent?.trim() || 'Projeto';
       const video = card.dataset.video || '';
@@ -581,6 +612,9 @@
       overlay.classList.add('open');
       overlay.setAttribute('aria-hidden', 'false');
 
+      // trava rolagem da página; rola só dentro do modal
+      setPageScrollLock(true);
+
       const vid = document.getElementById('projVideo');
       vid && vid.play?.().catch(()=>{});
     }
@@ -592,6 +626,9 @@
       overlay.setAttribute('aria-hidden','true');
       modalBody.innerHTML = '';
       modalFooter.innerHTML = '';
+
+      // libera rolagem da página
+      setPageScrollLock(false);
     }
 
     document.addEventListener('click', (e)=>{
@@ -708,9 +745,7 @@
       }
 
       input.addEventListener('input', doSearch);
-      btnClear.addEventListener('click', ()=>{
-        input.value=''; input.focus(); doSearch();
-      });
+      btnClear.addEventListener('click', ()=>{ input.value=''; input.focus(); doSearch(); });
 
       document.addEventListener('keydown', (e)=>{
         if (e.key === '/' && document.activeElement !== input){
