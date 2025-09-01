@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <title>Help Amado — Início</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --laranja:#ff6b00; --roxo:#6a1b9a; --azul:#2563eb; --verde:#16a34a; --amarelo:#eab308;
+      --cinza-claro:#f5f7fb; --texto:#1f2937; --borda:#e5e7eb; --card:#ffffff;
+      --bg-grad:linear-gradient(120deg,#fff 0%,#fff 30%,#f8efff 60%,#fff 100%);
+      --font-heading:'Plus Jakarta Sans',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial,sans-serif;
+      --font-body:'Inter',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial,sans-serif;
+      --radius-lg:18px; --radius-md:14px; --shadow:0 10px 30px rgba(0,0,0,.10);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:#fff;color:var(--texto);font-family:var(--font-body);line-height:1.55;-webkit-text-size-adjust:100%}
+    img,video{max-width:100%;display:block}
+
+    ::selection{background:rgba(106,27,154,.18)}
+    :focus-visible{outline:3px solid rgba(37,99,235,.45);outline-offset:2px;border-radius:10px}
+
+    header{background:#fff;position:sticky;top:0;z-index:80;border-bottom:1px solid var(--borda)}
+    header::after{content:"";display:block;height:3px;background:linear-gradient(90deg,var(--roxo),var(--laranja),var(--azul),var(--verde),var(--amarelo),var(--roxo));background-size:300% 100%;animation:brandMove 12s linear infinite}
+    .header-wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1200px;margin:0 auto;padding:14px 20px}
+    .logo-text{font-family:var(--font-heading);font-weight:800;font-size:1.5rem;text-decoration:none;line-height:1;display:inline-flex;align-items:center}
+    .logo-orange{color:var(--laranja)} .logo-purple{color:var(--roxo)}
+    nav.primary{display:flex;align-items:center;gap:18px}
+    nav.primary a{text-decoration:none;color:var(--texto);font-weight:700;opacity:.85;position:relative;padding:8px 2px}
+    nav.primary a:hover{color:var(--laranja);opacity:1}
+    nav.primary a.active{color:var(--laranja)}
+    nav.primary a::after{content:"";position:absolute;left:0;bottom:-6px;height:2px;width:0;background:currentColor;transition:width .2s ease}
+    nav.primary a:hover::after,nav.primary a.active::after{width:100%}
+    @keyframes brandMove{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+
+    .hamb{display:none;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;border:1px solid var(--borda);background:#fff;cursor:pointer}
+    .hamb:active{transform:scale(.98)}
+    .hamb .bars{position:relative;width:22px;height:14px;display:block}
+    .hamb .bar{position:absolute;left:0;width:22px;height:2px;border-radius:2px;background:#6b7280;transform-origin:center;transition:transform .22s ease,opacity .18s ease,background .18s ease}
+    .hamb .bar:nth-child(1){top:0}
+    .hamb .bar:nth-child(2){top:6px}
+    .hamb .bar:nth-child(3){top:12px}
+    .hamb.is-open .bar:nth-child(1){transform:translateY(6px) rotate(45deg);background:#111}
+    .hamb.is-open .bar:nth-child(2){opacity:0}
+    .hamb.is-open .bar:nth-child(3){transform:translateY(-6px) rotate(-45deg);background:#111}
+
+    .drawer{position:fixed;inset:0;z-index:90;display:none}
+    .drawer.open{display:block}
+    .drawer .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.45);backdrop-filter:saturate(1.1) blur(2px);opacity:0;transition:opacity .25s ease}
+    .drawer.open .backdrop{opacity:1}
+    .sheet{position:absolute;right:0;top:0;height:100%;width:min(88vw,380px);background:#fff;border-left:1px solid var(--borda);box-shadow:var(--shadow);transform:translateX(100%);transition:transform .28s cubic-bezier(.2,.7,.2,1)}
+    .drawer.open .sheet{transform:translateX(0)}
+    .sheet header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--borda)}
+    .sheet .links{display:grid;gap:10px;padding:16px}
+    .sheet .link-btn{display:flex;align-items:center;gap:12px;min-height:52px;padding:14px;border-radius:14px;font-weight:800;text-decoration:none;color:#111;border:1px solid var(--borda);transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease, background .12s ease}
+    .sheet .link-btn .dot{width:10px;height:10px;border-radius:999px;box-shadow:0 0 0 2px #fff inset}
+    .sheet .link-btn:hover{border-color:#e5d9ff;background:#fcfaff}
+    .sheet .link-btn:active{transform:scale(.985)}
+    .sheet .link-btn[aria-current="page"]{border-color:#e9d5ff;background:#f9f5ff;color:var(--roxo);box-shadow:0 2px 14px rgba(106,27,154,.08) inset}
+    .dot.home{background:#ff6b00} .dot.manuais{background:#2563eb} .dot.suporte{background:#16a34a} .dot.games{background:#6a1b9a}
+
+    .hero{position:relative;overflow:hidden;background:var(--bg-grad);padding:56px 20px}
+    .hero::before{content:"";position:absolute;inset:-40%;background:
+      radial-gradient(40% 30% at 20% 20%, rgba(106,27,154,.15), transparent 60%),
+      radial-gradient(35% 25% at 80% 30%, rgba(255,107,0,.12), transparent 60%),
+      radial-gradient(45% 35% at 50% 80%, rgba(37,99,235,.10), transparent 60%);animation:floatBg 16s linear infinite}
+    @keyframes floatBg{0%{transform:translate3d(0,0,0)}50%{transform:translate3d(-5%, 3%, 0)}100%{transform:translate3d(0,0,0)}}
+    .hero .wrap{max-width:1200px;margin:0 auto;text-align:center;position:relative}
+    .hero h1{font:800 clamp(1.7rem,4vw,2.6rem)/1.1 var(--font-heading);color:var(--roxo);margin:0 0 10px}
+    .hero p{margin:0 0 16px;opacity:.9}
+    .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;border-radius:12px;border:1px solid transparent;cursor:pointer;font-weight:800;text-decoration:none;transition:transform .15s ease,filter .15s ease,box-shadow .15s ease;min-height:44px}
+    .btn:active{transform:scale(.98)}
+    .btn-primary{background:var(--laranja);color:#fff;box-shadow:0 6px 14px rgba(255,107,0,.25)}
+    .btn-primary:hover{filter:brightness(.96)}
+    .btn-outline{background:#fff;color:var(--roxo);border-color:var(--roxo)}
+    .btn-outline:hover{background:#f8f5ff}
+
+    .cta-suporte{position:fixed;right:18px;bottom:18px;z-index:70;background:linear-gradient(135deg,var(--laranja),var(--roxo));color:#fff;border-radius:999px;padding:12px 16px;font-weight:800;text-decoration:none;box-shadow:0 10px 30px rgba(0,0,0,.18);animation:pulse 2.4s ease-in-out infinite}
+    @keyframes pulse{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+    .container{max-width:1200px;margin:0 auto;padding:28px 18px 60px}
+    .section-title{text-align:center;color:var(--roxo);font:800 clamp(1.3rem,3vw,1.9rem)/1 var(--font-heading);margin:22px 0 26px}
+
+    .ribbon{background:linear-gradient(90deg,var(--azul),var(--verde),var(--amarelo),var(--laranja),var(--roxo));background-size:300% 100%;animation:brandMove 16s linear infinite;border-radius:16px;padding:12px;margin:12px 0 24px}
+    .ribbon p{margin:0;text-align:center;color:#fff;font-weight:700}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+    .card{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--borda);border-radius:var(--radius-lg);overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.04);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+    .card:hover{transform:translateY(-4px);box-shadow:0 18px 34px rgba(0,0,0,.10);border-color:#d7dce3}
+    .card-media{background:#eef2f7;aspect-ratio:16/9;display:flex;justify-content:center;align-items:center;overflow:hidden}
+    .card-media img{width:100%;height:100%;object-fit:cover}
+    .card-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1}
+    .card-title{font:800 1.05rem/1.3 var(--font-heading);margin:0;color:var(--roxo)}
+    .card-meta{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .badge{font-size:.72rem;font-weight:800;color:#4c1d95;background:#f3e8ff;border:1px solid #e9d5ff;border-radius:999px;padding:5px 10px}
+    .btn-mini{padding:10px 12px;border-radius:10px;border:1px solid transparent;cursor:pointer;font-weight:800;text-decoration:none;background:var(--laranja);color:#fff;transition:transform .15s ease,filter .15s ease}
+    .btn-mini:hover{filter:brightness(.96)} .btn-mini:active{transform:scale(.98)}
+    .btn-book{padding:10px 12px;border-radius:10px;border:1px solid var(--roxo);background:#fff;color:var(--roxo);text-decoration:none;font-weight:800}
+    .btn-book:hover{background:#f8f5ff}
+
+    .ripple{position:absolute;pointer-events:none;border-radius:9999px;transform:scale(0);opacity:.5;background:radial-gradient(circle, rgba(255,107,0,.35) 0%, rgba(106,27,154,.35) 70%, transparent 72%);animation:ripple .6s ease-out}
+    @keyframes ripple{to{transform:scale(10);opacity:0}}
+
+    .site-footer{color:#fff;margin-top:40px;position:relative;overflow:hidden;background:linear-gradient(90deg,var(--roxo),var(--laranja),var(--azul),var(--verde),var(--amarelo),var(--roxo));background-size:300% 100%;animation:brandMove 16s linear infinite}
+    .footer-wrap{max-width:1200px;margin:0 auto;padding:18px 20px calc(18px + env(safe-area-inset-bottom));display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+    .site-footer p{margin:0;font-weight:600}
+    @media (prefers-reduced-motion:reduce){
+      header::after,.site-footer,.hero::before{animation:none;background-position:50% 50%}
+      .drawer .sheet,.drawer .backdrop{transition:none}
+    }
+
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:16px;z-index:75;backdrop-filter:saturate(1.1) blur(2px)}
+    .overlay.open{display:flex}
+    .modal{
+      background:#fff;border:1px solid var(--borda);border-radius:16px;
+      max-width:980px;width:min(96vw,980px);
+      max-height:calc(100dvh - 24px);
+      box-shadow:0 25px 60px rgba(0,0,0,.18);
+      display:flex;flex-direction:column;overflow:hidden;animation:pop .15s ease
+    }
+    .modal-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-bottom:1px solid var(--borda);position:sticky;top:0;background:#fff;z-index:1}
+    .modal-title{font:800 1.05rem/1.2 var(--font-heading);color:var(--roxo);margin:0}
+    .close{background:#fff;border:1px solid var(--borda);border-radius:10px;padding:8px 10px;font-weight:800;cursor:pointer}
+    @keyframes pop{from{transform:translateY(6px);opacity:.0}to{transform:translateY(0);opacity:1}}
+
+    .modal-body{padding:16px; overflow:auto; scroll-behavior:smooth; display:block}
+    .modal-grid{display:grid; grid-template-columns:1.25fr 1fr; gap:16px; align-items:start}
+    @media (max-width: 900px){ .modal-grid{ grid-template-columns:1fr; } }
+
+    .video-wrap{position:relative;border:1px solid var(--borda);border-radius:12px;overflow:hidden;background:#000}
+    .video-wrap::before{content:"";display:block;aspect-ratio:16/9}
+    .video-wrap > video, .video-wrap > iframe{position:absolute;inset:0;width:100%;height:100%}
+
+    .proj-content{display:grid;gap:10px}
+    .proj-content .chips{display:flex;gap:8px;flex-wrap:wrap}
+    .proj-content .steps{margin:0 0 2px 18px}
+
+    .modal-footer{margin-top:auto; position:sticky; bottom:0; z-index:1; background:#fff;border-top:1px solid var(--borda); padding:12px 16px; display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap}
+    .btn-download{display:inline-flex;align-items:center;gap:8px; padding:12px 14px;border-radius:12px;border:1px solid transparent; background:var(--laranja);color:#fff;font-weight:800;text-decoration:none; box-shadow:0 6px 14px rgba(255,107,0,.25)}
+    .btn-download:hover{filter:brightness(.96)} .btn-download:active{transform:translateY(1px)}
+
+    .cb{position:fixed;right:18px;bottom:90px;z-index:70;display:none}
+    .cb.open{display:block}
+    .cb-window{width:min(92vw,380px);height:520px;background:#fff;border:1px solid var(--borda);border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.18);display:flex;flex-direction:column;overflow:hidden}
+    .cb-header{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:linear-gradient(90deg,var(--roxo),var(--laranja));color:#fff;position:relative}
+    .cb-title{font:800 1rem/1 var(--font-heading);display:flex;align-items:center;gap:8px}
+    .cb-actions{display:flex;gap:8px}
+    .cb-ico{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:10px;padding:6px 8px;font-weight:800;cursor:pointer}
+    .cb-messages{flex:1;padding:12px;overflow:auto;background:linear-gradient(180deg,#ffffff 0%, #faf7ff 100%)}
+    .cb-msg{display:flex;margin:8px 0;gap:8px;align-items:flex-start}
+    .cb-msg.user .bubble{background:#e3f2ff;border:1px solid #cfe7ff;color:#0b2a55}
+    .cb-msg.bot .bubble{background:linear-gradient(180deg,#f6f0ff,#fff);border:1px solid #eadcff}
+    .bubble{padding:10px 12px;border-radius:12px;max-width:78%;box-shadow:0 2px 8px rgba(0,0,0,.04);white-space:pre-wrap}
+    .avatar{width:26px;height:26px;border-radius:999px;display:grid;place-items:center;font-weight:800;color:#fff}
+    .avatar.u{background:var(--azul)} .avatar.b{background:var(--roxo)}
+    .cb-typing{font-size:.85rem;opacity:.7;margin:6px 12px}
+    .cb-input{display:flex;gap:8px;padding:10px;border-top:1px solid var(--borda);background:#fff}
+    .cb-input input{flex:1;padding:10px;border:1px solid var(--borda);border-radius:10px}
+    .cb-input button{padding:10px 12px;border-radius:10px;border:1px solid transparent;background:var(--laranja);color:#fff;font-weight:800;cursor:pointer}
+
+    @media (max-width: 900px){ nav.primary{display:none} .hamb{display:inline-flex} }
+    @media (max-width: 768px){
+      .header-wrap{gap:10px;padding:12px 16px}
+      .logo-text{font-size:1.35rem}
+      .hero{padding:40px 16px}
+      .hero h1{font-size:1.45rem}
+      .actions .btn{min-height:46px}
+      .grid{grid-template-columns:1fr;gap:18px}
+      .card-body{padding:14px}
+      .card-title{font-size:1rem}
+      .footer-wrap{flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px}
+      .cta-suporte{right:14px;bottom:calc(14px + env(safe-area-inset-bottom))}
+      .cb{right:14px;bottom:calc(80px + env(safe-area-inset-bottom))}
+      .cb-window{width:96vw;height:70vh;border-radius:14px}
+      .bubble{max-width:86%}
+    }
+    @media (max-width:420px){
+      .btn{width:100%;max-width:360px;font-size:.98rem;padding:11px 14px}
+      .section-title{font-size:1.15rem}
+      .sheet{width:100vw}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-wrap">
+      <a href="index.html" class="logo-text logo-link" aria-label="Voltar para Início">
+        <span class="logo-orange">Help</span> <span class="logo-purple">Amado</span>
+      </a>
+
+      <nav class="primary" aria-label="Navegação principal">
+        <a class="active" href="index.html" aria-current="page">Início</a>
+        <a href="manuais.html">Manuais</a>
+        <a href="suporte.html">Suporte</a>
+        <a href="games.html">Games</a>
+      </nav>
+
+      <button class="hamb" id="btnHamb" aria-controls="drawer" aria-expanded="false" aria-label="Abrir menu">
+        <span class="bars"><span class="bar"></span><span class="bar"></span><span class="bar"></span></span>
+      </button>
+    </div>
+  </header>
+
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="backdrop" id="backdrop" role="button" aria-label="Fechar menu"></div>
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="menuTitle">
+      <header>
+        <strong id="menuTitle" style="font:800 1rem var(--font-heading);color:var(--roxo)">Menu</strong>
+        <button class="hamb is-open" id="btnClose" aria-label="Fechar menu">
+          <span class="bars"><span class="bar"></span><span class="bar"></span><span class="bar"></span></span>
+        </button>
+      </header>
+
+      <nav class="links" aria-label="Menu mobile">
+        <a href="index.html" class="link-btn"><span class="dot home"></span> Início</a>
+        <a href="manuais.html" class="link-btn"><span class="dot manuais"></span> Manuais</a>
+        <a href="suporte.html" class="link-btn"><span class="dot suporte"></span> Suporte</a>
+        <a href="games.html" class="link-btn"><span class="dot games"></span> Games</a>
+      </nav>
+    </div>
+  </aside>
+
+  <section class="hero">
+    <div class="wrap">
+      <h1>Bem-vindos ao Help Amado</h1>
+      <p>Projetos criativos e suporte técnico para transformar a aprendizagem.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="manuais.html">Ver Manuais</a>
+        <a class="btn btn-outline" href="suporte.html">Abrir Chamado</a>
+      </div>
+    </div>
+  </section>
+
+  <a class="cta-suporte" href="#" id="ctaChat" title="Precisa de ajuda agora?">Precisa de Suporte?</a>
+
+  <main class="container">
+    <div class="ribbon"><p>Impressora 3D • Corte a Laser • Plotter • Telas Interativas • Notebooks</p></div>
+
+    <h2 class="section-title">Ideias de Projetos Pedagógicos</h2>
+    <section class="grid" aria-label="Ideias pedagógicas">
+      <!-- Basta trocar data-video para um link do YouTube (watch/youtu.be/embed) ou para um URL .mp4 hospedado -->
+      <article class="card" data-project="proj1" data-pdf="livros/proj1.pdf" data-video="https://youtu.be/5f5LUSQlYMU" data-files="downloads/proj1.zip">
+        <div class="card-media"><img src="imagens/INDUSTRIAL .jpg" alt="Centro de Distribuição 4.0"/></div>
+        <div class="card-body">
+          <h3 class="card-title">Centro de Distribuição 4.0</h3>
+          <p>Identidade da turma e vetorização básica.</p>
+          <div class="card-meta">
+            <span class="badge">9° Ano</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn-mini" data-modal="proj1">Ver projeto</button>
+              <a class="btn-book" href="livros/proj1.pdf" target="_blank" rel="noopener">Abrir livro</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-project="proj2" data-pdf="livros/proj2.pdf" data-video="videos/proj2.mp4" data-files="downloads/proj2.zip">
+        <div class="card-media"><img src="imagens/placa 3d.png" alt="Peças impressas 3D"/></div>
+        <div class="card-body">
+          <h3 class="card-title">Selo 3D da Escola</h3>
+          <p>Modelagem simples e impressão.</p>
+          <div class="card-meta">
+            <span class="badge">Impressora 3D</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn-mini" data-modal="proj2">Ver projeto</button>
+              <a class="btn-book" href="livros/proj2.pdf" target="_blank" rel="noopener">Abrir livro</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-project="proj3" data-pdf="livros/proj3.pdf" data-video="videos/proj3.mp4" data-files="downloads/proj3.zip">
+        <div class="card-media"><img src="imagens/Mapa MDF.png" alt="Quebra-cabeça de mapa"/></div>
+        <div class="card-body">
+          <h3 class="card-title">Mapa Quebra-cabeça</h3>
+          <p>Geografia com encaixes em MDF.</p>
+          <div class="card-meta">
+            <span class="badge">Corte a Laser</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn-mini" data-modal="proj3">Ver projeto</button>
+              <a class="btn-book" href="livros/proj3.pdf" target="_blank" rel="noopener">Abrir livro</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-project="proj4" data-pdf="livros/proj4.pdf" data-video="videos/proj4.mp4" data-files="downloads/proj4.zip">
+        <div class="card-media"><img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?w=800&auto=format&fit=crop&q=70" alt="Placas e adesivos"/></div>
+        <div class="card-body">
+          <h3 class="card-title">Sinalização da Escola</h3>
+          <p>Pictogramas feitos pelos alunos.</p>
+          <div class="card-meta">
+            <span class="badge">Plotter</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn-mini" data-modal="proj4">Ver projeto</button>
+              <a class="btn-book" href="livros/proj4.pdf" target="_blank" rel="noopener">Abrir livro</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-project="proj5" data-pdf="livros/proj5.pdf" data-video="videos/proj5.mp4" data-files="downloads/proj5.zip">
+        <div class="card-media"><img src="imagens/robo.png" alt="Protótipos com microcontroladores"/></div>
+        <div class="card-body">
+          <h3 class="card-title">Robótica Básica</h3>
+          <p>Sensores, lógica e desafios.</p>
+          <div class="card-meta">
+            <span class="badge">Tecnologia</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn-mini" data-modal="proj5">Ver projeto</button>
+              <a class="btn-book" href="livros/proj5.pdf" target="_blank" rel="noopener">Abrir livro</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-project="proj6" data-pdf="livros/proj6.pdf" data-video="videos/proj6.mp4" data-files="downloads/proj6.zip">
+        <div class="card-media"><img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&auto=format&fit=crop&q=70" alt="Carimbos"/></div>
+        <div class="card-body">
+          <h3 class="card-title">Carimbo Pedagógico</h3>
+          <p>Cabo 3D + matriz a laser.</p>
+          <div class="card-meta">
+            <span class="badge">3D + Laser</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn-mini" data-modal="proj6">Ver projeto</button>
+              <a class="btn-book" href="livros/proj6.pdf" target="_blank" rel="noopener">Abrir livro</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-project="proj7" data-pdf="livros/proj7.pdf" data-video="videos/proj7.mp4" data-files="downloads/proj7.zip">
+        <div class="card-media"><img src="https://images.unsplash.com/photo-1587573089734-09cb69c0f1b3?w=800&auto=format&fit=crop&q=70" alt="Porta-lápis"/></div>
+        <div class="card-body">
+          <h3 class="card-title">Porta-lápis Paramétrico</h3>
+          <p>Encaixes e tolerância.</p>
+          <div class="card-meta">
+            <span class="badge">Corte a Laser</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn-mini" data-modal="proj7">Ver projeto</button>
+              <a class="btn-book" href="livros/proj7.pdf" target="_blank" rel="noopener">Abrir livro</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-project="proj8" data-pdf="livros/proj8.pdf" data-video="videos/proj8.mp4" data-files="downloads/proj8.zip">
+        <div class="card-media"><img src="https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800&auto=format&fit=crop&q=70" alt="Totem com QR Codes"/></div>
+        <div class="card-body">
+          <h3 class="card-title">Totem com QR Codes</h3>
+          <p>Exposição com links.</p>
+          <div class="card-meta">
+            <span class="badge">Plotter + Tela</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn-mini" data-modal="proj8">Ver projeto</button>
+              <a class="btn-book" href="livros/proj8.pdf" target="_blank" rel="noopener">Abrir livro</a>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-wrap">
+      <p>© 2025 Help Amado — Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Modal -->
+  <div class="overlay" id="overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Projeto</h3>
+        <button class="close" id="closeModal" aria-label="Fechar">Fechar</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer" id="modalFooter"></div>
+    </div>
+  </div>
+
+  <!-- Chat -->
+  <div class="cb" id="chatbot" aria-live="polite">
+    <div class="cb-window">
+      <div class="cb-header">
+        <div class="cb-title">🤖 Chat IA</div>
+        <div class="cb-actions"><button class="cb-ico" id="cbCloseBtn" title="Fechar">✖</button></div>
+        <div class="cb-progress" id="cbProgress" aria-hidden="true"><span id="cbProgressBar"></span></div>
+      </div>
+      <div class="cb-messages" id="cbMessages"></div>
+      <form class="cb-input" id="cbForm">
+        <input id="cbText" type="text" placeholder="Escreva sua pergunta..." autocomplete="off" />
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    /* ===== Drawer ===== */
+    (() => {
+      const drawer   = document.getElementById('drawer');
+      const btn      = document.getElementById('btnHamb');
+      const closeBtn = document.getElementById('btnClose');
+      const backdrop = document.getElementById('backdrop');
+      const sheet    = drawer.querySelector('.sheet');
+      const links    = drawer.querySelectorAll('.links a');
+
+      const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+      links.forEach(a => { if ((a.getAttribute('href')||'').toLowerCase() === path) a.setAttribute('aria-current','page'); });
+
+      let lastFocus = null;
+      const lockScroll = (on)=>{ document.documentElement.style.overflow = on ? 'hidden' : '' };
+
+      function openDrawer(){
+        lastFocus = document.activeElement;
+        drawer.classList.add('open');
+        drawer.setAttribute('aria-hidden','false');
+        btn.setAttribute('aria-expanded','true');
+        btn.classList.add('is-open');
+        closeBtn.classList.add('is-open');
+        lockScroll(true);
+        const first = drawer.querySelector('.links a'); first && first.focus();
+        document.addEventListener('focus', trapFocus, true);
+      }
+      function closeDrawer(){
+        drawer.classList.remove('open');
+        drawer.setAttribute('aria-hidden','true');
+        btn.setAttribute('aria-expanded','false');
+        btn.classList.remove('is-open');
+        closeBtn.classList.remove('is-open');
+        lockScroll(false);
+        document.removeEventListener('focus', trapFocus, true);
+        if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+      }
+      function trapFocus(e){
+        if (!drawer.classList.contains('open')) return;
+        if (!drawer.contains(e.target)){
+          const first = drawer.querySelector('button, [href], input, [tabindex]:not([tabindex="-1"])');
+          first && first.focus();
+        }
+      }
+      btn.addEventListener('click', openDrawer);
+      closeBtn.addEventListener('click', closeDrawer);
+      backdrop.addEventListener('click', closeDrawer);
+      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
+      links.forEach(a => a.addEventListener('click', closeDrawer));
+    })();
+
+    /* Ripple em cards */
+    document.addEventListener('click', (e)=>{
+      const card = e.target.closest('.card'); if(!card) return;
+      const r=document.createElement('span'); r.className='ripple';
+      const rect=card.getBoundingClientRect(); const size=Math.max(rect.width,rect.height);
+      r.style.width=r.style.height=size+'px'; r.style.left=(e.clientX-rect.left-size/2)+'px'; r.style.top=(e.clientY-rect.top-size/2)+'px';
+      card.appendChild(r); setTimeout(()=>r.remove(),600);
+    });
+
+    /* ===== Modal de projetos (agora aceita YouTube e MP4 hospedado) ===== */
+    const overlay = document.getElementById('overlay');
+    const modalBody = document.getElementById('modalBody');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalFooter = document.getElementById('modalFooter');
+    const closeModal = document.getElementById('closeModal');
+
+    const TPL={
+      proj1:`<div class="chips"><span class="badge">Corte a Laser</span><span class="badge">1–2 aulas</span></div><p><strong>Centro de distribuição 4.0</strong></p><ol class="steps"><li>Desenho vetorial simples.</li><li>Definir corte/gravação.</li><li>Testar potência/velocidade.</li><li>Cortar e montar.</li></ol>`,
+      proj2:`<div class="chips"><span class="badge">Impressora 3D</span><span class="badge">2–3 aulas</span></div><p><strong>Selo da escola</strong> em alto-relevo.</p><ol class="steps"><li>Modelagem (Tinkercad/Fusion).</li><li>Fatiar 0,2mm / 20%.</li><li>Imprimir PLA e finalizar.</li></ol>`,
+      proj3:`<div class="chips"><span class="badge">Corte a Laser</span><span class="badge">2 aulas</span></div><p><strong>Mapa-puzzle</strong> para estudar regiões.</p><ol class="steps"><li>Vetor por estados.</li><li>Corte MDF 3mm.</li><li>Base/tabuleiro.</li></ol>`,
+      proj4:`<div class="chips"><span class="badge">Plotter</span><span class="badge">1–2 aulas</span></div><p><strong>Sinalização</strong> com ícones e cores padronizadas.</p><ol class="steps"><li>Levantamento de locais.</li><li>Recorte de vinil.</li><li>Aplicação assistida.</li></ol>`,
+      proj5:`<div class="chips"><span class="badge">Tecnologia</span><span class="badge">2–4 aulas</span></div><p><strong>Robôs simples</strong> com sensores.</p><ol class="steps"><li>Montagem do kit.</li><li>Programação básica.</li><li>Desafio final.</li></ol>`,
+      proj6:`<div class="chips"><span class="badge">3D + Laser</span><span class="badge">1–2 aulas</span></div><p><strong>Carimbo</strong> com cabo 3D e matriz a laser.</p><ol class="steps"><li>Modelar e imprimir cabo.</li><li>Gravar borracha (espelhado).</li><li>Colar e testar.</li></ol>`,
+      proj7:`<div class="chips"><span class="badge">Corte a Laser</span><span class="badge">1–2 aulas</span></div><p><strong>Porta-lápis</strong> com folga ajustada.</p><ol class="steps"><li>Desenho paramétrico.</li><li>Corte e montagem.</li><li>Acabamento.</li></ol>`,
+      proj8:`<div class="chips"><span class="badge">Plotter + Tela</span><span class="badge">1 aula</span></div><p><strong>Totem com QR Codes</strong> para exposição.</p><ol class="steps"><li>Gerar QR Codes.</li><li>Imprimir totem.</li><li>Montar e testar.</li></ol>`
+    };
+
+    const normalize = (p) => (p || "").replace(/\\/g,'/');
+
+    function toYouTubeEmbed(url){
+      if (!url) return url;
+      // youtu.be/ID
+      const short = url.match(/youtu\.be\/([^?&]+)/i);
+      if (short) return `https://www.youtube.com/embed/${short[1]}`;
+      // watch?v=ID
+      const watch = url.match(/[?&]v=([^?&]+)/i);
+      if (watch) return `https://www.youtube.com/embed/${watch[1]}`;
+      // already /embed/
+      if (/youtube\.com\/embed\//i.test(url)) return url;
+      return url;
+    }
+
+    function buildModalGrid(videoSrc, htmlContent){
+      const src = normalize(videoSrc);
+      const isYouTube = /(youtube\.com|youtu\.be)/i.test(src);
+      const media = isYouTube
+        ? `<iframe src="${toYouTubeEmbed(src)}" title="YouTube video player" frameborder="0"
+             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+             allowfullscreen></iframe>`
+        : `<video id="projVideo" autoplay muted playsinline loop controls>
+             <source src="${src}" type="video/mp4"/>
+             Seu navegador não suporta vídeo HTML5.
+           </video>`;
+      const wrap = document.createElement('div');
+      wrap.className = 'modal-grid';
+      wrap.innerHTML = `
+        <div class="video-wrap">
+          ${media}
+        </div>
+        <div class="proj-content">
+          ${htmlContent}
+        </div>
+      `;
+      return wrap;
+    }
+
+    function openProjectModal(card, key){
+      const title = card.querySelector('.card-title')?.textContent?.trim() || 'Projeto';
+      const video = card.dataset.video || '';
+      const files = card.dataset.files || '';
+
+      modalTitle.textContent = title;
+
+      modalBody.innerHTML = '';
+      const contentHTML = (TPL[key] || '<p>Conteúdo indisponível.</p>');
+      if(video){
+        modalBody.appendChild(buildModalGrid(video, contentHTML));
+      }else{
+        const only = document.createElement('div');
+        only.className='proj-content';
+        only.innerHTML = contentHTML;
+        modalBody.appendChild(only);
+      }
+
+      modalFooter.innerHTML = files ? `<a class="btn-download" href="${files}" download>⬇️ Baixar arquivos</a>` : '';
+
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden', 'false');
+
+      const vid = document.getElementById('projVideo');
+      vid && vid.play?.().catch(()=>{});
+    }
+
+    function closeProjectModal(){
+      const vid = document.getElementById('projVideo');
+      if(vid){ try{ vid.pause(); }catch(e){} }
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden','true');
+      modalBody.innerHTML = '';
+      modalFooter.innerHTML = '';
+    }
+
+    document.addEventListener('click', (e)=>{
+      const btn = e.target.closest('[data-modal]');
+      if(btn){
+        const key = btn.getAttribute('data-modal');
+        const card = btn.closest('.card');
+        openProjectModal(card, key);
+      }
+    });
+
+    closeModal?.addEventListener('click', closeProjectModal);
+    overlay?.addEventListener('click', (e)=>{ if(e.target === overlay){ closeProjectModal(); } });
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && overlay.classList.contains('open')) closeProjectModal(); });
+
+    /* Chat (placeholder) */
+    (()=>{
+      const chat = document.getElementById('chatbot');
+      const cta = document.getElementById('ctaChat');
+      const close = document.getElementById('cbCloseBtn');
+      cta?.addEventListener('click', (e)=>{ e.preventDefault(); chat.classList.add('open'); });
+      close?.addEventListener('click', ()=> chat.classList.remove('open'));
+    })();
+  </script>
+</body>
+</html>
