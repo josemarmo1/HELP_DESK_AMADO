@@ -466,7 +466,7 @@
     const closeModal = document.getElementById('closeModal');
 
     const TPL={
-      proj1:`<div class="chips"><span class="badge">Corte a Laser</span><span class="badge">1–2 aulas</span></div><p><strong>Centro de distribuição 4.0</strong></p><ol class="steps"><li>Desenho vetorial simples.</li><li>Definir corte/gravação.</li><li>Testar potência/velocidade.</li><li>Cortar e montar.</li></ol>`,
+      proj1:`<div class="chips"><span class="badge">Corte a Laser</span><span class="badge">Impresora 3D</span></div><p><strong>Centro de distribuição 4.0</strong></p><ol class="steps"><li>Desenho vetorial simples.</li><li>Definir corte/gravação.</li><li>Testar potência/velocidade.</li><li>Cortar e montar.</li></ol>`,
       proj2:`<div class="chips"><span class="badge">Impressora 3D</span><span class="badge">2–3 aulas</span></div><p><strong>Selo da escola</strong> em alto-relevo.</p><ol class="steps"><li>Modelagem (Tinkercad/Fusion).</li><li>Fatiar 0,2mm / 20%.</li><li>Imprimir PLA e finalizar.</li></ol>`,
       proj3:`<div class="chips"><span class="badge">Corte a Laser</span><span class="badge">2 aulas</span></div><p><strong>Mapa-puzzle</strong> para estudar regiões.</p><ol class="steps"><li>Vetor por estados.</li><li>Corte MDF 3mm.</li><li>Base/tabuleiro.</li></ol>`,
       proj4:`<div class="chips"><span class="badge">Plotter</span><span class="badge">1–2 aulas</span></div><p><strong>Sinalização</strong> com ícones e cores padronizadas.</p><ol class="steps"><li>Levantamento de locais.</li><li>Recorte de vinil.</li><li>Aplicação assistida.</li></ol>`,
@@ -533,7 +533,7 @@
         modalBody.appendChild(only);
       }
 
-      modalFooter.innerHTML = files ? `<a class="btn-download" href="${files}" download>⬇️ Baixar arquivos</a>` : '';
+      modalFooter.innerHTML = files ? `<a class="btn-download" href="${files}" download>Baixar arquivos</a>` : '';
 
       overlay.classList.add('open');
       overlay.setAttribute('aria-hidden', 'false');
