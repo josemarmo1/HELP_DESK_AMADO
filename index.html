@@ -95,8 +95,6 @@
     .badge{font-size:.72rem;font-weight:800;color:#4c1d95;background:#f3e8ff;border:1px solid #e9d5ff;border-radius:999px;padding:5px 10px}
     .btn-mini{padding:10px 12px;border-radius:10px;border:1px solid transparent;cursor:pointer;font-weight:800;text-decoration:none;background:var(--laranja);color:#fff;transition:transform .15s ease,filter .15s ease}
     .btn-mini:hover{filter:brightness(.96)} .btn-mini:active{transform:scale(.98)}
-    .btn-book{padding:10px 12px;border-radius:10px;border:1px solid var(--roxo);background:#fff;color:var(--roxo);text-decoration:none;font-weight:800}
-    .btn-book:hover{background:#f8f5ff}
 
     .ripple{position:absolute;pointer-events:none;border-radius:9999px;transform:scale(0);opacity:.5;background:radial-gradient(circle, rgba(255,107,0,.35) 0%, rgba(106,27,154,.35) 70%, transparent 72%);animation:ripple .6s ease-out}
     @keyframes ripple{to{transform:scale(10);opacity:0}}
@@ -123,16 +121,7 @@
     .close{background:#fff;border:1px solid var(--borda);border-radius:10px;padding:8px 10px;font-weight:800;cursor:pointer}
     @keyframes pop{from{transform:translateY(6px);opacity:.0}to{transform:translateY(0);opacity:1}}
 
-    /* rolando dentro do modal, sem rolar a página */
-    .modal-body{
-      padding:16px;
-      flex:1;
-      overflow:auto;
-      scroll-behavior:smooth;
-      -webkit-overflow-scrolling:touch;
-      overscroll-behavior:contain;
-      display:block;
-    }
+    .modal-body{padding:16px;flex:1;overflow:auto;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;display:block}
     .modal-grid{display:grid; grid-template-columns:1.25fr 1fr; gap:16px; align-items:start}
     @media (max-width: 900px){ .modal-grid{ grid-template-columns:1fr; } }
 
@@ -144,22 +133,109 @@
     .proj-content .chips{display:flex;gap:8px;flex-wrap:wrap}
 
     .modal-footer{margin-top:auto; position:sticky; bottom:0; z-index:1; background:#fff;border-top:1px solid var(--borda); padding:12px 16px; display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap}
-    .btn-download{display:inline-flex;align-items:center;gap:8px; padding:12px 14px;border-radius:12px;border:1px solid transparent; background:var(--laranja);color:#fff;font-weight:800;text-decoration:none; box-shadow:0 6px 14px rgba(255,107,0,.25)}
+    .btn-download,.btn-book{display:inline-flex;align-items:center;gap:8px; padding:12px 14px;border-radius:12px;border:1px solid transparent; font-weight:800;text-decoration:none}
+    .btn-download{background:var(--laranja);color:#fff;box-shadow:0 6px 14px rgba(255,107,0,.25)}
     .btn-download:hover{filter:brightness(.96)} .btn-download:active{transform:translateY(1px)}
+    .btn-book{background:#fff;border:1px solid var(--roxo);color:var(--roxo)}
+    .btn-book:hover{background:#f8f5ff}
 
-    /* ====== Busca ====== */
-    .search-wrap{max-width:1200px;margin:0 auto 14px; padding:0 18px; display:grid; gap:8px}
-    .search-bar{display:flex;align-items:center;gap:8px;border:1px solid var(--borda);background:#fff;border-radius:12px;padding:10px 12px}
-    .search-bar input{flex:1;border:0;outline:0;font:600 1rem var(--font-body)}
-    .search-bar button{border:1px solid var(--borda);background:#fff;border-radius:10px;padding:8px 10px;font-weight:800;cursor:pointer}
+    /* ====== Filtros (com botão) ====== */
+    .filters-wrap{max-width:1200px;margin:0 auto 14px;padding:0 18px;display:grid;gap:10px;position:relative}
+    .filters-head{display:flex;align-items:center;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+    .btn-filters{
+      display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;border:1px solid var(--borda);
+      background:#fff;font-weight:800;cursor:pointer;transition:filter .15s ease,transform .15s ease,box-shadow .15s ease
+    }
+    .btn-filters:hover{filter:brightness(.98)}
+    .btn-filters:active{transform:scale(.99)}
+    .btn-filters .chev{display:inline-block;transition:transform .18s ease}
+    .btn-filters[aria-expanded="true"] .chev{transform:rotate(180deg)}
+    /* contador de resultados */
+    .results-pill{
+      padding:8px 12px;border:1px solid var(--borda);border-radius:999px;background:#faf7ff;
+      font-weight:800;color:#4c1d95
+    }
+
+    .filters-panel{
+      border:1px solid var(--borda);background:#fff;border-radius:16px;
+      box-shadow:0 18px 40px rgba(0,0,0,.08);
+      overflow:hidden; max-height:0; opacity:.0; transform:translateY(-4px);
+      transition:max-height .28s ease, opacity .2s ease, transform .2s ease;
+    }
+    .filters-panel.open{max-height:80vh; opacity:1; transform:translateY(0)} /* 80vh pra nunca cortar */
+
+    .filters-grid{display:grid;grid-template-columns:1fr auto;gap:14px;padding:14px}
+    .filter-group{display:grid;gap:10px}
+    .group-title{font:800 .9rem var(--font-heading);color:#4c1d95;display:flex;align-items:center;gap:8px}
+    .group-title .dot{width:8px;height:8px;border-radius:999px;background:#c4b5fd;box-shadow:0 0 0 3px #f3e8ff}
+
+    .filters-bar{
+      display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;
+      background:#faf7ff;border:1px dashed #eadcff;border-radius:12px;padding:10px 12px
+    }
+    .chip-scroll{display:flex;gap:8px;overflow:auto;padding:2px;scrollbar-width:thin;min-width:0}
+    .chip{
+      position:relative; user-select:none; white-space:nowrap;
+      border:1px solid var(--borda); background:#fff;
+      border-radius:999px; padding:9px 14px; font-weight:800; cursor:pointer;
+      transition:all .16s ease; box-shadow:0 1px 0 rgba(0,0,0,.04)
+    }
+    .chip:hover{transform:translateY(-1px); box-shadow:0 6px 16px rgba(0,0,0,.06)}
+    .chip:focus-visible{outline:3px solid rgba(37,99,235,.35)}
+    .chip::before{
+      content:""; width:8px; height:8px; border-radius:999px; margin-right:8px;
+      display:inline-block; vertical-align:middle; background:var(--chip-color,#d1d5db);
+      box-shadow:0 0 0 3px color-mix(in srgb, var(--chip-color,#d1d5db) 25%, #fff);
+    }
+    .chip[aria-pressed="true"]{
+      color:#111; border-color:color-mix(in srgb, var(--chip-color,#d1d5db) 45%, #fff);
+      background:color-mix(in srgb, var(--chip-color,#d1d5db) 13%, #fff);
+      box-shadow:inset 0 0 0 2px color-mix(in srgb, var(--chip-color,#d1d5db) 35%, transparent);
+    }
+    .chip[data-year="all"]{--chip-color:#a78bfa}
+    .chip[data-year="1"]{--chip-color:#38bdf8}
+    .chip[data-year="2"]{--chip-color:#34d399}
+    .chip[data-year="3"]{--chip-color:#f59e0b}
+    .chip[data-year="4"]{--chip-color:#fb7185}
+    .chip[data-year="5"]{--chip-color:#60a5fa}
+    .chip[data-year="6"]{--chip-color:#f97316}
+    .chip[data-year="7"]{--chip-color:#22c55e}
+    .chip[data-year="8"]{--chip-color:#e879f9}
+    .chip[data-year="9"]{--chip-color:#f43f5e}
+
+    .filters-right{display:flex;align-items:center;gap:8px;margin-left:auto;min-width:220px}
+    .search-input{
+      flex:1;min-width:240px;border:1px solid var(--borda);background:#fff;border-radius:12px;
+      padding:10px 12px 10px 38px;font:600 1rem var(--font-body);
+      background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="%236b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>');
+      background-repeat:no-repeat;background-position:12px center
+    }
+    .search-input::placeholder{color:#9aa3af}
+    .btn-clear{
+      border:1px solid var(--borda);background:#fff;border-radius:12px;padding:10px 12px;
+      font-weight:800;cursor:pointer;transition:transform .15s ease,filter .15s ease
+    }
+    .btn-clear:hover{filter:brightness(.98)} .btn-clear:active{transform:scale(.98)}
+
+    /* rodapé do painel (limpar filtros) */
+    .filters-footer{display:flex;justify-content:flex-end;padding:0 14px 14px}
+    .btn-reset{
+      border:1px solid var(--borda);background:#fff;border-radius:12px;padding:10px 12px;font-weight:800;cursor:pointer
+    }
+    .btn-reset:hover{background:#f8f8ff}
+
     .no-results{display:none;text-align:center;border:1px dashed var(--borda);border-radius:14px;padding:18px;margin-top:8px;color:#6b7280}
     .no-results.show{display:block}
-    mark{background:#fff3cd; padding:0 .15em; border-radius:4px}
+    mark{background:#fff3cd;padding:0 .15em;border-radius:4px}
 
-    /* trava a rolagem da página quando modal/drawer aberto */
     html.scroll-lock, body.scroll-lock { overflow:hidden; height:100%; }
 
     @media (max-width: 900px){ nav.primary{display:none} .hamb{display:inline-flex} }
+    @media (max-width: 1000px){
+      .filters-bar{grid-template-columns:1fr}
+      .filters-right{width:100%;min-width:0}
+      .search-input{max-width:none}
+    }
     @media (max-width: 768px){
       .header-wrap{gap:10px;padding:12px 16px}
       .logo-text{font-size:1.35rem}
@@ -231,20 +307,54 @@
   <main class="container">
     <div class="ribbon"><p>Impressora 3D • Corte a Laser • Plotter • Tela Interativa • Notebook</p></div>
 
-    <!-- BUSCA (sem sugestões/contagem) -->
-    <div class="search-wrap" role="search" aria-label="Buscar projetos">
-      <div class="search-bar">
-        <input id="searchInput" type="search" placeholder="Digite para filtrar (ex.: 9 ano, laser, robotica, mapa)" autocomplete="off" />
-        <button id="searchClear" type="button" title="Limpar">Limpar</button>
+    <!-- ===== FILTROS (botão que abre opções) ===== -->
+    <div class="filters-wrap" role="search" aria-label="Filtrar projetos">
+      <div class="filters-head">
+        <button id="btnFilters" class="btn-filters" aria-expanded="false" aria-controls="filtersPanel">
+          Filtros <span class="chev">▾</span>
+        </button>
+        <span id="resultsCount" class="results-pill" aria-live="polite"> </span>
       </div>
-      <div class="no-results" id="noResults">Nenhum projeto encontrado para este termo.</div>
+
+      <div id="filtersPanel" class="filters-panel" hidden>
+        <div class="filters-grid">
+          <div class="filter-group">
+            <div class="group-title"><span class="dot"></span> Séries</div>
+            <div class="filters-bar">
+              <div class="chip-scroll" id="yearChips" role="group" aria-label="Filtrar por ano">
+                <button class="chip" data-year="all" aria-pressed="true">Todos</button>
+                <button class="chip" data-year="1">1º ano</button>
+                <button class="chip" data-year="2">2º ano</button>
+                <button class="chip" data-year="3">3º ano</button>
+                <button class="chip" data-year="4">4º ano</button>
+                <button class="chip" data-year="5">5º ano</button>
+                <button class="chip" data-year="6">6º ano</button>
+                <button class="chip" data-year="7">7º ano</button>
+                <button class="chip" data-year="8">8º ano</button>
+                <button class="chip" data-year="9">9º ano</button>
+              </div>
+              <div class="filters-right">
+                <input id="searchInput" class="search-input" type="search" placeholder="Buscar por termo (ex.: laser, robótica, mapa)" autocomplete="off"/>
+                <button id="searchClear" class="btn-clear" type="button" title="Limpar">Limpar</button>
+              </div>
+            </div>
+          </div>
+          <div class="filter-group" aria-hidden="true"></div>
+        </div>
+
+        <div class="filters-footer">
+          <button id="btnResetFilters" class="btn-reset" type="button">Limpar filtros</button>
+        </div>
+
+        <div class="no-results" id="noResults">Nenhum projeto encontrado com esses filtros.</div>
+      </div>
     </div>
 
     <h2 class="section-title">Ideias de Projetos Pedagógicos</h2>
 
     <section class="grid" aria-label="Ideias pedagógicas">
-      <!-- cards mantidos iguais ao seu último envio -->
-      <article class="card" data-project="proj1" data-pdf="livros/proj1.pdf" data-video="https://youtu.be/5f5LUSQlYMU" data-files="downloads/proj1.zip" data-tags="9 ano, logística, corte a laser, impressora 3d, cd 4.0, identidade visual">
+      <!-- cards com data-year para o filtro -->
+      <article class="card" data-project="proj1" data-year="9" data-pdf="livros/DIGITALMENTE LIVRO DO PROFESSOR_9º ANO_V1 - DIGITAL_REV.pdf" data-video="https://youtu.be/5f5LUSQlYMU" data-files="downloads/proj1.zip" data-tags="9 ano, logística, corte a laser, impressora 3d, cd 4.0, identidade visual">
         <div class="card-media"><img src="imagens/INDUSTRIAL .jpg" alt="Centro de Distribuição 4.0"/></div>
         <div class="card-body">
           <h3 class="card-title">Centro de Distribuição 4.0</h3>
@@ -253,13 +363,12 @@
             <span class="badge">9° Ano</span>
             <div style="display:flex;gap:8px;flex-wrap:wrap">
               <button class="btn-mini" data-modal="proj1">Ver projeto</button>
-              <a class="btn-book" href="livros/DIGITALMENTE LIVRO DO PROFESSOR_9º ANO_V1 - DIGITAL_REV.pdf" target="_blank" rel="noopener">Abrir livro</a>
             </div>
           </div>
         </div>
       </article>
 
-      <article class="card" data-project="proj2" data-pdf="livros/proj2.pdf" data-video="videos/proj2.mp4" data-files="downloads/proj2.zip" data-tags="impressão 3d, selo, alto relevo, tinkercad, fusion, pla">
+      <article class="card" data-project="proj2" data-year="7" data-pdf="livros/proj2.pdf" data-video="videos/proj2.mp4" data-files="downloads/proj2.zip" data-tags="impressão 3d, selo, alto relevo, tinkercad, fusion, pla">
         <div class="card-media"><img src="imagens/placa 3d.png" alt="Peças impressas 3D"/></div>
         <div class="card-body">
           <h3 class="card-title">Selo 3D da Escola</h3>
@@ -268,13 +377,12 @@
             <span class="badge">Impressora 3D</span>
             <div style="display:flex;gap:8px;flex-wrap:wrap">
               <button class="btn-mini" data-modal="proj2">Ver projeto</button>
-              <a class="btn-book" href="livros/proj2.pdf" target="_blank" rel="noopener">Abrir livro</a>
             </div>
           </div>
         </div>
       </article>
 
-      <article class="card" data-project="proj3" data-pdf="livros/proj3.pdf" data-video="videos/proj3.mp4" data-files="downloads/proj3.zip" data-tags="mapa, geografia, mdf 3mm, quebra-cabeça, estados">
+      <article class="card" data-project="proj3" data-year="6" data-pdf="livros/proj3.pdf" data-video="videos/proj3.mp4" data-files="downloads/proj3.zip" data-tags="mapa, geografia, mdf 3mm, quebra-cabeça, estados">
         <div class="card-media"><img src="imagens/Mapa MDF.png" alt="Quebra-cabeça de mapa"/></div>
         <div class="card-body">
           <h3 class="card-title">Mapa Quebra-cabeça</h3>
@@ -283,13 +391,12 @@
             <span class="badge">Corte a Laser</span>
             <div style="display:flex;gap:8px;flex-wrap:wrap">
               <button class="btn-mini" data-modal="proj3">Ver projeto</button>
-              <a class="btn-book" href="livros/proj3.pdf" target="_blank" rel="noopener">Abrir livro</a>
             </div>
           </div>
         </div>
       </article>
 
-      <article class="card" data-project="proj4" data-pdf="livros/proj4.pdf" data-video="videos/proj4.mp4" data-files="downloads/proj4.zip" data-tags="pictogramas, sinalização, vinil, design, acessibilidade">
+      <article class="card" data-project="proj4" data-year="5" data-pdf="livros/proj4.pdf" data-video="videos/proj4.mp4" data-files="downloads/proj4.zip" data-tags="pictogramas, sinalização, vinil, design, acessibilidade">
         <div class="card-media"><img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?w=800&auto=format&fit=crop&q=70" alt="Placas e adesivos"/></div>
         <div class="card-body">
           <h3 class="card-title">Sinalização da Escola</h3>
@@ -298,13 +405,12 @@
             <span class="badge">Plotter</span>
             <div style="display:flex;gap:8px;flex-wrap:wrap">
               <button class="btn-mini" data-modal="proj4">Ver projeto</button>
-              <a class="btn-book" href="livros/proj4.pdf" target="_blank" rel="noopener">Abrir livro</a>
             </div>
           </div>
         </div>
       </article>
 
-      <article class="card" data-project="proj5" data-pdf="livros/proj5.pdf" data-video="videos/proj5.mp4" data-files="downloads/proj5.zip" data-tags="robótica, sensores, lógica, kits educacionais">
+      <article class="card" data-project="proj5" data-year="8" data-pdf="livros/proj5.pdf" data-video="videos/proj5.mp4" data-files="downloads/proj5.zip" data-tags="robótica, sensores, lógica, kits educacionais">
         <div class="card-media"><img src="imagens/robo.png" alt="Protótipos com microcontroladores"/></div>
         <div class="card-body">
           <h3 class="card-title">Robótica Básica</h3>
@@ -313,13 +419,12 @@
             <span class="badge">Tecnologia</span>
             <div style="display:flex;gap:8px;flex-wrap:wrap">
               <button class="btn-mini" data-modal="proj5">Ver projeto</button>
-              <a class="btn-book" href="livros/proj5.pdf" target="_blank" rel="noopener">Abrir livro</a>
             </div>
           </div>
         </div>
       </article>
 
-      <article class="card" data-project="proj6" data-pdf="livros/proj6.pdf" data-video="videos/proj6.mp4" data-files="downloads/proj6.zip" data-tags="carimbo, borracha, gravação a laser, cabo 3d, artes">
+      <article class="card" data-project="proj6" data-year="4" data-pdf="livros/proj6.pdf" data-video="videos/proj6.mp4" data-files="downloads/proj6.zip" data-tags="carimbo, borracha, gravação a laser, cabo 3d, artes">
         <div class="card-media"><img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&auto=format&fit=crop&q=70" alt="Carimbos"/></div>
         <div class="card-body">
           <h3 class="card-title">Carimbo Pedagógico</h3>
@@ -328,13 +433,12 @@
             <span class="badge">3D + Laser</span>
             <div style="display:flex;gap:8px;flex-wrap:wrap">
               <button class="btn-mini" data-modal="proj6">Ver projeto</button>
-              <a class="btn-book" href="livros/proj6.pdf" target="_blank" rel="noopener">Abrir livro</a>
             </div>
           </div>
         </div>
       </article>
 
-      <article class="card" data-project="proj7" data-pdf="livros/proj7.pdf" data-video="videos/proj7.mp4" data-files="downloads/proj7.zip" data-tags="paramétrico, tolerância, encaixe, design, matemática">
+      <article class="card" data-project="proj7" data-year="7" data-pdf="livros/proj7.pdf" data-video="videos/proj7.mp4" data-files="downloads/proj7.zip" data-tags="paramétrico, tolerância, encaixe, design, matemática">
         <div class="card-media"><img src="https://images.unsplash.com/photo-1587573089734-09cb69c0f1b3?w=800&auto=format&fit=crop&q=70" alt="Porta-lápis"/></div>
         <div class="card-body">
           <h3 class="card-title">Porta-lápis Paramétrico</h3>
@@ -343,13 +447,12 @@
             <span class="badge">Corte a Laser</span>
             <div style="display:flex;gap:8px;flex-wrap:wrap">
               <button class="btn-mini" data-modal="proj7">Ver projeto</button>
-              <a class="btn-book" href="livros/proj7.pdf" target="_blank" rel="noopener">Abrir livro</a>
             </div>
           </div>
         </div>
       </article>
 
-      <article class="card" data-project="proj8" data-pdf="livros/proj8.pdf" data-video="videos/proj8.mp4" data-files="downloads/proj8.zip" data-tags="totem, qrcode, exposição, links, integração digital">
+      <article class="card" data-project="proj8" data-year="5" data-pdf="livros/proj8.pdf" data-video="videos/proj8.mp4" data-files="downloads/proj8.zip" data-tags="totem, qrcode, exposição, links, integração digital">
         <div class="card-media"><img src="https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800&auto=format&fit=crop&q=70" alt="Totem com QR Codes"/></div>
         <div class="card-body">
           <h3 class="card-title">Totem com QR Codes</h3>
@@ -358,7 +461,6 @@
             <span class="badge">Plotter + Tela</span>
             <div style="display:flex;gap:8px;flex-wrap:wrap">
               <button class="btn-mini" data-modal="proj8">Ver projeto</button>
-              <a class="btn-book" href="livros/proj8.pdf" target="_blank" rel="noopener">Abrir livro</a>
             </div>
           </div>
         </div>
@@ -455,7 +557,6 @@
                <em>(EM13MAT405)</em> Utilizar raciocínio lógico e pensamento computacional para representar e resolver problemas.<br>
                <em>(EM13LP45)</em> Produzir textos técnicos e relatórios para registrar e comunicar processos.
              </p>`,
-
       proj2:`<div class="chips">
                <span class="badge">Impressora 3D</span>
                <span class="badge">2–3 aulas</span>
@@ -465,7 +566,6 @@
                <em>Ex. 1:</em> Cultura digital e criação com tecnologias.<br>
                <em>Ex. 2:</em> Resolução de problemas em processos de produção.
              </p>`,
-
       proj3:`<div class="chips">
                <span class="badge">Corte a Laser</span>
                <span class="badge">2 aulas</span>
@@ -475,7 +575,6 @@
                <em>Ex. 1:</em> Localização e representação espacial.<br>
                <em>Ex. 2:</em> Pensamento científico e investigação.
              </p>`,
-
       proj4:`<div class="chips">
                <span class="badge">Plotter</span>
                <span class="badge">1–2 aulas</span>
@@ -485,7 +584,6 @@
                <em>Ex. 1:</em> Comunicação visual e multimodalidade.<br>
                <em>Ex. 2:</em> Empatia e respeito à diversidade/acessibilidade.
              </p>`,
-
       proj5:`<div class="chips">
                <span class="badge">Tecnologia</span>
                <span class="badge">2–4 aulas</span>
@@ -495,7 +593,6 @@
                <em>Ex. 1:</em> Pensamento computacional e algoritmos.<br>
                <em>Ex. 2:</em> Trabalho colaborativo e resolução de problemas.
              </p>`,
-
       proj6:`<div class="chips">
                <span class="badge">3D + Laser</span>
                <span class="badge">1–2 aulas</span>
@@ -505,7 +602,6 @@
                <em>Ex. 1:</em> Expressão artística e design.<br>
                <em>Ex. 2:</em> Planejamento e registro de processo criativo.
              </p>`,
-
       proj7:`<div class="chips">
                <span class="badge">Corte a Laser</span>
                <span class="badge">1–2 aulas</span>
@@ -515,7 +611,6 @@
                <em>Ex. 1:</em> Raciocínio quantitativo e medidas.<br>
                <em>Ex. 2:</em> Modelagem e validação de protótipos.
              </p>`,
-
       proj8:`<div class="chips">
                <span class="badge">Plotter + Tela</span>
                <span class="badge">1 aula</span>
@@ -569,9 +664,8 @@
       return wrap;
     }
 
-    // ===== lock de rolagem da página quando modal abre
+    // ===== trava rolagem da página quando modal abre
     const blockScroll = (e) => {
-      // se clicar/rolar fora do modal enquanto ele estiver aberto, bloqueia
       const modal = document.querySelector('.modal');
       if (overlay.classList.contains('open') && modal && !modal.contains(e.target)) {
         e.preventDefault();
@@ -593,6 +687,7 @@
       const title = card.querySelector('.card-title')?.textContent?.trim() || 'Projeto';
       const video = card.dataset.video || '';
       const files = card.dataset.files || '';
+      const pdf = card.dataset.pdf || '';
 
       modalTitle.textContent = title;
       modalBody.innerHTML = '';
@@ -607,12 +702,13 @@
         modalBody.appendChild(only);
       }
 
-      modalFooter.innerHTML = files ? `<a class="btn-download" href="${files}" download>Baixar arquivos</a>` : '';
+      let footerHTML = '';
+      if (pdf)  footerHTML += `<a class="btn-book" href="${pdf}" target="_blank" rel="noopener">Abrir livro</a>`;
+      if (files) footerHTML += `<a class="btn-download" href="${files}" download>Baixar arquivos</a>`;
+      modalFooter.innerHTML = footerHTML;
 
       overlay.classList.add('open');
       overlay.setAttribute('aria-hidden', 'false');
-
-      // trava rolagem da página; rola só dentro do modal
       setPageScrollLock(true);
 
       const vid = document.getElementById('projVideo');
@@ -626,8 +722,6 @@
       overlay.setAttribute('aria-hidden','true');
       modalBody.innerHTML = '';
       modalFooter.innerHTML = '';
-
-      // libera rolagem da página
       setPageScrollLock(false);
     }
 
@@ -644,7 +738,36 @@
     overlay?.addEventListener('click', (e)=>{ if(e.target === overlay){ closeProjectModal(); } });
     document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && overlay.classList.contains('open')) closeProjectModal(); });
 
-    /* ===== Busca de cards (fuzzy, sem sugestões/contagem) ===== */
+    // ===== Toggle do painel de filtros (abre/fecha)
+    (() => {
+      const btn = document.getElementById('btnFilters');
+      const panel = document.getElementById('filtersPanel');
+      if(!btn || !panel) return;
+
+      const open = () => {
+        btn.setAttribute('aria-expanded','true');
+        panel.hidden = false;
+        requestAnimationFrame(() => panel.classList.add('open'));
+        document.addEventListener('keydown', onEsc);
+        document.addEventListener('click', onOutside, true);
+      };
+      const close = () => {
+        btn.setAttribute('aria-expanded','false');
+        panel.classList.remove('open');
+        setTimeout(() => { panel.hidden = true; }, 220);
+        document.removeEventListener('keydown', onEsc);
+        document.removeEventListener('click', onOutside, true);
+      };
+      const toggle = () => (btn.getAttribute('aria-expanded') === 'true') ? close() : open();
+      const onEsc = (e) => { if(e.key === 'Escape') close(); };
+      const onOutside = (e) => {
+        if (!panel.contains(e.target) && e.target !== btn && !btn.contains(e.target)) close();
+      };
+
+      btn.addEventListener('click', toggle);
+    })();
+
+    /* ===== Filtro por Ano + Busca (fuzzy leve) ===== */
     (() => {
       const $ = (sel,ctx=document) => ctx.querySelector(sel);
       const $$ = (sel,ctx=document) => Array.from(ctx.querySelectorAll(sel));
@@ -652,20 +775,27 @@
       const input = $('#searchInput');
       const btnClear = $('#searchClear');
       const noResults = $('#noResults');
+      const resultsCount = document.getElementById('resultsCount');
+      const btnResetFilters = document.getElementById('btnResetFilters');
+
       const grid = document.querySelector('.grid');
       if(!grid) return;
       const cards = $$('.card', grid);
+      const chipsWrap = $('#yearChips');
+      const chips = $$('.chip', chipsWrap);
 
       const idx = cards.map(card => {
         const title = (card.querySelector('.card-title')?.textContent || '').trim();
         const desc = (card.querySelector('.card-body p')?.textContent || '').trim();
         const badges = $$('.badge', card).map(b => b.textContent.trim()).join(' ');
         const tags = (card.dataset.tags || '').trim();
+        const year = (card.dataset.year || '').trim();
         const haystack = [title, desc, badges, tags].join(' ').toLowerCase();
-        return {card, title, desc, badges, tags, haystack};
+        return {card, title, desc, badges, tags, haystack, year};
       });
 
       const norm = s => (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+      const tokenize = s => norm(s).split(/[^a-z0-9]+/).filter(Boolean);
 
       function lev(a,b,max=2){
         if (Math.abs(a.length - b.length) > max) return max+1;
@@ -686,14 +816,11 @@
         return dp[b.length];
       }
 
-      const tokenize = s => norm(s).split(/[^a-z0-9]+/).filter(Boolean);
-
-      function fuzzyMatch(q, hay){
+      function fuzzy(q, hay){
         if (!q) return true;
         const hTokens = tokenize(hay);
         const qTokens = tokenize(q);
         if (!qTokens.length) return true;
-
         return qTokens.every(qt => {
           if (hTokens.includes(qt)) return true;
           const max = qt.length <= 4 ? 1 : 2;
@@ -703,6 +830,50 @@
           }
           return false;
         });
+      }
+
+      const state = { years: new Set(['all']), q: '' };
+
+      function setChipPressed(btn, on){ btn.setAttribute('aria-pressed', on ? 'true' : 'false'); }
+
+      chips.forEach(ch => {
+        setChipPressed(ch, ch.dataset.year === 'all');
+        ch.addEventListener('click', () => {
+          const y = ch.dataset.year;
+          if (y === 'all'){
+            state.years.clear(); state.years.add('all');
+            chips.forEach(c => setChipPressed(c, c.dataset.year === 'all'));
+          } else {
+            if (state.years.has('all')) state.years.delete('all');
+            if (state.years.has(y)) state.years.delete(y); else state.years.add(y);
+            if (state.years.size === 0){ state.years.add('all'); }
+            chips.forEach(c => {
+              if (state.years.has('all')) setChipPressed(c, c.dataset.year === 'all');
+              else setChipPressed(c, state.years.has(c.dataset.year));
+            });
+          }
+          apply();
+        });
+      });
+
+      let tId;
+      function queueApply(){ clearTimeout(tId); tId = setTimeout(apply, 80); }
+
+      input.addEventListener('input', () => { state.q = input.value.trim(); queueApply(); });
+      btnClear.addEventListener('click', ()=>{ input.value=''; state.q=''; input.focus(); apply(); });
+
+      // limpar tudo (chips + busca)
+      btnResetFilters?.addEventListener('click', () => {
+        state.q = '';
+        input.value = '';
+        state.years.clear(); state.years.add('all');
+        chips.forEach(c => setChipPressed(c, c.dataset.year === 'all'));
+        apply();
+      });
+
+      function matchYear(cardYear){
+        if (state.years.has('all')) return true;
+        return state.years.has(cardYear);
       }
 
       function highlight(card, term){
@@ -719,45 +890,50 @@
         });
       }
 
-      let tId;
-      function doSearch(){
-        clearTimeout(tId);
-        tId = setTimeout(applySearch, 80);
+      function updateCounter(n){
+        if(!resultsCount) return;
+        const label = n === 1 ? '1 projeto' : `${n} projetos`;
+        resultsCount.textContent = label;
       }
 
-      function applySearch(){
-        const qRaw = input.value.trim();
+      function apply(){
+        const q = state.q;
         let matches = 0;
 
         idx.forEach(item=>{
-          const ok = fuzzyMatch(qRaw, item.haystack);
+          const okYear = matchYear(item.year);
+          const okText = fuzzy(q, item.haystack);
+          const ok = okYear && okText;
           item.card.style.display = ok ? '' : 'none';
           if (ok) matches++;
-          highlight(item.card, qRaw);
+          highlight(item.card, q);
         });
 
         noResults.classList.toggle('show', matches===0);
+        updateCounter(matches);
 
         const url = new URL(location.href);
-        if(qRaw) url.searchParams.set('q', qRaw);
-        else url.searchParams.delete('q');
+        if(q) url.searchParams.set('q', q); else url.searchParams.delete('q');
+        const ys = state.years.has('all') ? 'all' : Array.from(state.years).sort().join(',');
+        url.searchParams.set('years', ys);
         history.replaceState(null,'', url.toString());
       }
 
-      input.addEventListener('input', doSearch);
-      btnClear.addEventListener('click', ()=>{ input.value=''; input.focus(); doSearch(); });
+      // Restaurar a partir da URL (se houver)
+      const url = new URL(location.href);
+      const qParam = url.searchParams.get('q'); if(qParam){ input.value = qParam; state.q = qParam; }
+      const yearsParam = url.searchParams.get('years');
+      if (yearsParam && yearsParam !== 'all'){
+        state.years.clear();
+        yearsParam.split(',').forEach(y => { if (/^[1-9]$/.test(y)) state.years.add(y); });
+        if (state.years.size===0) state.years.add('all');
+        chips.forEach(c => {
+          if (state.years.has('all')) setChipPressed(c, c.dataset.year === 'all');
+          else setChipPressed(c, state.years.has(c.dataset.year));
+        });
+      }
 
-      document.addEventListener('keydown', (e)=>{
-        if (e.key === '/' && document.activeElement !== input){
-          e.preventDefault(); input.focus();
-        } else if (e.key === 'Escape' && input.value){
-          input.value=''; doSearch();
-        }
-      });
-
-      const qParam = new URL(location.href).searchParams.get('q');
-      if(qParam){ input.value = qParam; }
-      applySearch();
+      apply(); // inicializa contador e estado
     })();
   </script>
 </body>
